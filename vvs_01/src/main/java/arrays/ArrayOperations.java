@@ -10,7 +10,7 @@ package arrays;
  * Faculty of Sciences
  * Department of Informatics
  * 
- * @author Eduardo Marques, Vasco T. Vasconcelos
+ * @author Eduardo Marques, Vasco T. Vasconcelos 
  * @version $Id: ArrayOperations.java 253 2016-02-20 15:31:46Z vv $
  */
 public class ArrayOperations {
