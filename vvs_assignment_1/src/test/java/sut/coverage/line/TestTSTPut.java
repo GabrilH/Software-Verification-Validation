@@ -21,4 +21,12 @@ public class TestTSTPut {
         tst.put("she", 1);
         // nao tem assert? ou fazer get?
     }
+
+    // é necessario?
+    // @Test
+    // public void testWithContaining() {
+    //     TST<Integer> tst = new TST<Integer>();
+    //     tst.put("she", 1);
+    //     tst.put("she", 2);
+    // }
 }

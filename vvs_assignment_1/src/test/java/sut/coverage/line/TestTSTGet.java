@@ -16,7 +16,7 @@ public class TestTSTGet {
     }
 
     @Test
-    public void testWithLengthZero() {
+    public void testWithKeyLengthZero() {
         assertThrows(IllegalArgumentException.class, () -> {
             TST<Integer> tst = new TST<Integer>();
             tst.put("she", 1);
@@ -25,13 +25,13 @@ public class TestTSTGet {
     }
 
     @Test
-    public void testWithoutPut() {
+    public void testWithKeyAndWithoutPut() {
         TST<Integer> tst = new TST<Integer>();
         assertNull(tst.get("she"));
     }
 
     @Test
-    public void testNormalCase() {
+    public void testWithKeyAndWithPut() {
         TST<Integer> tst = new TST<Integer>();
         tst.put("she", 1);
         assert(tst.get("she") == 1);

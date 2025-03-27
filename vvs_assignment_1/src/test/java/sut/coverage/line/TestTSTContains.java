@@ -16,7 +16,7 @@ public class TestTSTContains {
     }
 
     @Test
-    public void testNormalCase() {
+    public void testWithPut() {
         TST<Integer> tst = new TST<Integer>();
         tst.put("she", 1);
         assert(tst.contains("she"));
