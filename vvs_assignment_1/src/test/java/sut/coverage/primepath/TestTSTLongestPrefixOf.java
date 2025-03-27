@@ -1,9 +1,7 @@
 package sut.coverage.primepath;
 
-import static org.junit.Assert.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 import sut.TST;
 
@@ -30,7 +28,7 @@ public class TestTSTLongestPrefixOf {
     public void testWithoutPuts() {
         // [1,3,5,6,16]
         TST<Integer> tst = new TST<>();
-        assert(tst.longestPrefixOf("a").equals(""));
+        assertEquals("", tst.longestPrefixOf("a"));
     }
 
     @Test
@@ -44,7 +42,7 @@ public class TestTSTLongestPrefixOf {
         TST<Integer> tst = new TST<>();
         tst.put("c", 1);
         tst.put("b", 2);
-        assert(tst.longestPrefixOf("a").equals(""));
+        assertEquals("", tst.longestPrefixOf("a"));
     }
 
     @Test
@@ -59,7 +57,7 @@ public class TestTSTLongestPrefixOf {
         TST<Integer> tst = new TST<>();
         tst.put("c", 1);
         tst.put("d", 2);
-        assert(tst.longestPrefixOf("e").equals(""));
+        assertEquals("", tst.longestPrefixOf("e"));
     }
 
     @Test
@@ -73,7 +71,7 @@ public class TestTSTLongestPrefixOf {
         TST<Integer> tst = new TST<>();
         tst.put("c", 1);
         tst.put("a", 2);
-        assert(tst.longestPrefixOf("b").equals(""));
+        assertEquals("", tst.longestPrefixOf("b"));
     }
 
     @Test
@@ -87,7 +85,7 @@ public class TestTSTLongestPrefixOf {
         TST<Integer> tst = new TST<>();
         tst.put("c", 1);
         tst.put("e", 2);
-        assert(tst.longestPrefixOf("d").equals(""));
+        assertEquals("", tst.longestPrefixOf("d"));
     }
 
     @Test
@@ -102,7 +100,7 @@ public class TestTSTLongestPrefixOf {
         TST<Integer> tst = new TST<>();
         tst.put("c", 1);
         tst.put("da", 2);
-        assert(tst.longestPrefixOf("d").equals(""));	
+        assertEquals("", tst.longestPrefixOf("d"));	
     }
 
     @Test
@@ -116,7 +114,7 @@ public class TestTSTLongestPrefixOf {
         // [7,8,10,11,6,16], [6,7,8,10,11,6]
         TST<Integer> tst = new TST<>();
         tst.put("ca", 1);
-        assert(tst.longestPrefixOf("cb").equals(""));
+        assertEquals("", tst.longestPrefixOf("cb"));
     }
 
     @Test
@@ -131,7 +129,7 @@ public class TestTSTLongestPrefixOf {
         // [10,12,13,15,6,7,8,10]
         TST<Integer> tst = new TST<>();
         tst.put("caa", 1);
-        assert(tst.longestPrefixOf("ca").equals(""));
+        assertEquals("", tst.longestPrefixOf("ca"));
     }
 
     @Test
@@ -145,7 +143,7 @@ public class TestTSTLongestPrefixOf {
         TST<Integer> tst = new TST<>();
         tst.put("c", 1);
         tst.put("ba", 2);
-        assert(tst.longestPrefixOf("b").equals(""));
+        assertEquals("", tst.longestPrefixOf("b"));
     }
 
     @Test
@@ -158,7 +156,7 @@ public class TestTSTLongestPrefixOf {
         // [10,12,13,15,6,7,8,9], [7,8,9,6,16], [6,7,8,9,6]
         TST<Integer> tst = new TST<>();
         tst.put("cb", 1);
-        assert(tst.longestPrefixOf("ca").equals(""));
+        assertEquals("", tst.longestPrefixOf("ca"));
     }
 
     @Test
@@ -173,7 +171,7 @@ public class TestTSTLongestPrefixOf {
         TST<Integer> tst = new TST<>();
         tst.put("c", 1);
         tst.put("d", 2);
-        assert(tst.longestPrefixOf("d").equals("d"));
+        assertEquals("d", tst.longestPrefixOf("d"));
     }
 
     @Test
@@ -188,7 +186,7 @@ public class TestTSTLongestPrefixOf {
         TST<Integer> tst = new TST<>();
         tst.put("c", 1);
         tst.put("ca", 2);
-        assert(tst.longestPrefixOf("cd").equals("c"));
+        assertEquals("c", tst.longestPrefixOf("cd"));
     }
 
     @Test
@@ -203,7 +201,7 @@ public class TestTSTLongestPrefixOf {
         // [13,15,6,7,8,10,12,13], [10,12,13,15,6,7,8,10]
         TST<Integer> tst = new TST<>();
         tst.put("ca", 1);
-        assert(tst.longestPrefixOf("ca").equals("ca"));
+        assertEquals("ca", tst.longestPrefixOf("ca"));
     }
 
     @Test
@@ -219,7 +217,7 @@ public class TestTSTLongestPrefixOf {
         TST<Integer> tst = new TST<>();
         tst.put("c", 1);
         tst.put("ca", 2);
-        assert(tst.longestPrefixOf("ca").equals("ca"));	
+        assertEquals("ca", tst.longestPrefixOf("ca"));
     }
 
     @Test
@@ -235,7 +233,7 @@ public class TestTSTLongestPrefixOf {
         TST<Integer> tst = new TST<>();
         tst.put("c", 1);
         tst.put("cab", 2);
-        assert(tst.longestPrefixOf("ca").equals("c"));
+        assertEquals("c", tst.longestPrefixOf("ca"));
     }
 
     @Test
@@ -249,7 +247,7 @@ public class TestTSTLongestPrefixOf {
         TST<Integer> tst = new TST<>();
         tst.put("c", 1);
         tst.put("a", 2);
-        assert(tst.longestPrefixOf("a").equals("a"));
+        assertEquals("a", tst.longestPrefixOf("a"));
     }
 
     @Test
@@ -263,6 +261,6 @@ public class TestTSTLongestPrefixOf {
         TST<Integer> tst = new TST<>();
         tst.put("a", 1);
         tst.put("ab", 2);
-        assert(tst.longestPrefixOf("aa").equals("a"));
+        assertEquals("a", tst.longestPrefixOf("aa"));
     }
 }

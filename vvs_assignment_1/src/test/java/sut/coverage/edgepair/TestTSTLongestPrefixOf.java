@@ -1,9 +1,7 @@
 package sut.coverage.edgepair;
 
-import static org.junit.Assert.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 import sut.TST;
 
@@ -32,7 +30,7 @@ public class TestTSTLongestPrefixOf {
         //
         // [1,3,5], [3,5,6], [5,6,16]
         TST<Integer> tst = new TST<>();
-        assert(tst.longestPrefixOf("a").equals(""));
+        assertEquals("", tst.longestPrefixOf("a"));
     }
 
     @Test
@@ -46,7 +44,7 @@ public class TestTSTLongestPrefixOf {
         TST<Integer> tst = new TST<>();
         tst.put("a", 1);
         tst.put("ab", 2);
-        assert(tst.longestPrefixOf("aa").equals("a"));
+        assertEquals("a", tst.longestPrefixOf("aa"));
     }
 
     @Test
@@ -60,7 +58,7 @@ public class TestTSTLongestPrefixOf {
         TST<Integer> tst = new TST<>();
         tst.put("c", 1);
         tst.put("e", 2);
-        assert(tst.longestPrefixOf("d").equals(""));
+        assertEquals("", tst.longestPrefixOf("d"));
     }
 
     @Test
@@ -74,7 +72,7 @@ public class TestTSTLongestPrefixOf {
         TST<Integer> tst = new TST<>();
         tst.put("c", 1);
         tst.put("a", 2);
-        assert(tst.longestPrefixOf("b").equals(""));
+        assertEquals("", tst.longestPrefixOf("b"));
     }
 
     @Test
@@ -87,6 +85,6 @@ public class TestTSTLongestPrefixOf {
         // [12,13,15], [13,15,6], [15,6,16]
         TST<Integer> tst = new TST<>();
         tst.put("casa", 1);
-        assert(tst.longestPrefixOf("c").equals(""));
+        assertEquals("", tst.longestPrefixOf("c"));
     }
 }

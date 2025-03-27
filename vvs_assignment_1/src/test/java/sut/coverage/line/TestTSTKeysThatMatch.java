@@ -1,14 +1,13 @@
 package sut.coverage.line;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import java.util.Iterator;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 import sut.TST;
 
-public class TestKeysThatMatch {
+public class TestTSTKeysThatMatch {
     
     @Test
     public void testNormalCase() {

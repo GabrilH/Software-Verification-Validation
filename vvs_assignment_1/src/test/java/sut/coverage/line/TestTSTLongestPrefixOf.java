@@ -1,10 +1,7 @@
 package sut.coverage.line;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 import sut.TST;
 
