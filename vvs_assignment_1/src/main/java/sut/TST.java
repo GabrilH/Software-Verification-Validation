@@ -117,9 +117,9 @@ public class TST<T> {
             x = new Node<>(); //3
             x.c = c; //3
         }
-        if      (c < x.c)               x.left  = put(x.left,  key, val, d); //4 5
-        else if (c > x.c)               x.right = put(x.right, key, val, d); //6 7
-        else if (d < key.length() - 1)  x.mid   = put(x.mid,   key, val, d+1); //8 9
+        if      (c < x.c)              /*4 */ x.left  = put(x.left,  key, val, d); //5
+        else if (c > x.c)              /*6 */ x.right = put(x.right, key, val, d); //7
+        else if (d < key.length() - 1) /*8 */ x.mid   = put(x.mid,   key, val, d+1); //9
         else                            x.val   = val; //10
         return x; //11
     }
@@ -133,20 +133,20 @@ public class TST<T> {
      * @throws IllegalArgumentException if {@code query} is {@code null}
      */
     public String longestPrefixOf(String query) {
-        if (query == null) //1
+        if (query == null) //1 B1
             throw new IllegalArgumentException("calls longestPrefixOf() with null argument"); //2
-        if (query.length() == 0) //3
+        if (query.length() == 0) //3 B2
         	return null; //4
         int length = 0; //5
         Node<T> x = root; //5
         int i = 0; //5
-        while (x != null && i < query.length()) { //6
+        while (x != null && i < query.length()) { //6 B3
             char c = query.charAt(i); //7
-            if      (c < x.c) x = x.left; //8 9
-            else if (c > x.c) x = x.right; //10 11
+            if      (c < x.c) /*8 B4*/ x = x.left; //9
+            else if (c > x.c) /*10 B5*/ x = x.right; //11
             else {
                 i++; //12
-                if (x.val != null) //13
+                if (x.val != null) //13 B6
                 	length = i; //14
                 x = x.mid; //15
             }
