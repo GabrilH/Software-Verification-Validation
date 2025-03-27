@@ -1,0 +1,27 @@
+as subdivisoes dos testes por pacotes e classes estao corretas?
+    - um pacote por paradigma, uma classe por método (algumas classes só têm 1 teste)?
+    - testes com o mesmo nome em pacotes diferentes?
+
+line e branch coverage: 
+    juntos ou separados? só diferem no longestPrefixOf pelo if then estarem na mesma linha
+    é suposto ir para dentro dos métodos privados?
+    como testar funções que não retornam nada? p.ex put. fazer assert que o TST ficou com a key lá?
+    no line coverage referenciamos o nº de linha do ficheiro ou nº da linha do método?
+
+edgepair:
+    - no site https://cs.gmu.edu:8443/offutt/coverage/GraphCoverage o 1º algoritmo de 
+    edgepair dá que [11,6,16] é infeasible, mas o 2º não. É normal?
+
+no all-coupling:
+    - é preciso analisar o key.charAt(d)? ou apenas os put?
+    - o c é relevante?
+    - definir/usar x.left é considerado definir/usar x? ou são variaveis separadas?
+    - é preciso fazer node antes de chamar put quando se chama com d+1?
+
+em geral:
+    - é suposto fazer testes extensos ou apenas suficientes para fazer coverage?
+        - p.ex testar o size.
+    - o que é suposto meter no relatório?
+        - fotos dos grafos e dos tests coverage dos sites?
+        - tabelas de defs/uses?
+
