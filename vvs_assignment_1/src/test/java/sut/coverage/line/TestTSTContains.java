@@ -10,15 +10,15 @@ public class TestTSTContains {
     @Test
     public void testWithNullKey() {
         assertThrows(IllegalArgumentException.class, () -> {
-            TST<Integer> st = new TST<Integer>();
-            st.contains(null);
+            TST<Integer> tst = new TST<Integer>();
+            tst.contains(null);
         });
     }
 
     @Test
     public void testNormalCase() {
-        TST<Integer> st = new TST<Integer>();
-        st.put("she", 1);
-        assert(st.contains("she"));
+        TST<Integer> tst = new TST<Integer>();
+        tst.put("she", 1);
+        assert(tst.contains("she"));
     }
 }

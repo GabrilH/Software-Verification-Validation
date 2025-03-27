@@ -16,23 +16,23 @@ public class TestTSTLongestPrefixOf {
 
     @Test
     public void testWithEmptyQuery() {
-        TST<Integer> st = new TST<Integer>();
-        assertNull(st.longestPrefixOf(""));
+        TST<Integer> tst = new TST<Integer>();
+        assertNull(tst.longestPrefixOf(""));
     }
 
     @Test
     public void testWithoutContaining() {
-        TST<Integer> st = new TST<Integer>();
-        st.put("she", 1);
-        assertEquals("", st.longestPrefixOf("shells"));
+        TST<Integer> tst = new TST<Integer>();
+        tst.put("she", 1);
+        assertEquals("", tst.longestPrefixOf("shells"));
     }
     
     @Test
     public void testNormalCase() {
-        TST<Integer> st = new TST<Integer>();
-        st.put("shore", 1);
-        st.put("sheet", 2);
-        st.put("she", 3);
-        assertEquals("she", st.longestPrefixOf("shells"));
+        TST<Integer> tst = new TST<Integer>();
+        tst.put("shore", 1);
+        tst.put("sheet", 2);
+        tst.put("she", 3);
+        assertEquals("she", tst.longestPrefixOf("shells"));
     }
 }

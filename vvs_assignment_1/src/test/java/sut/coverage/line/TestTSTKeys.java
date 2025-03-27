@@ -11,18 +11,18 @@ public class TestTSTKeys {
 
     @Test
     public void testWithoutKeys() {
-        TST<Integer> st = new TST<Integer>();
-        Iterator<String> it = st.keys().iterator();
+        TST<Integer> tst = new TST<Integer>();
+        Iterator<String> it = tst.keys().iterator();
         assertTrue(it.hasNext() == false);
     }
 
     @Test
     public void testWithKeys() {
-        TST<Integer> st = new TST<Integer>();
-        st.put("she", 1);
-        st.put("shore", 2);
+        TST<Integer> tst = new TST<Integer>();
+        tst.put("she", 1);
+        tst.put("shore", 2);
         
-        Iterator<String> it = st.keys().iterator();
+        Iterator<String> it = tst.keys().iterator();
         assertTrue(it.hasNext());
         it.next();
         assertTrue(it.hasNext());

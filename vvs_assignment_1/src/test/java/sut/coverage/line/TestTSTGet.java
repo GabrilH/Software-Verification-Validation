@@ -10,30 +10,30 @@ public class TestTSTGet {
     @Test
     public void testWithNullKey() {
         assertThrows(IllegalArgumentException.class, () -> {
-            TST<Integer> st = new TST<Integer>();
-            st.get(null);
+            TST<Integer> tst = new TST<Integer>();
+            tst.get(null);
         });
     }
 
     @Test
     public void testWithLengthZero() {
         assertThrows(IllegalArgumentException.class, () -> {
-            TST<Integer> st = new TST<Integer>();
-            st.put("she", 1);
-            st.get("");
+            TST<Integer> tst = new TST<Integer>();
+            tst.put("she", 1);
+            tst.get("");
         });
     }
 
     @Test
     public void testWithoutPut() {
-        TST<Integer> st = new TST<Integer>();
-        assertNull(st.get("she"));
+        TST<Integer> tst = new TST<Integer>();
+        assertNull(tst.get("she"));
     }
 
     @Test
     public void testNormalCase() {
-        TST<Integer> st = new TST<Integer>();
-        st.put("she", 1);
-        assert(st.get("she") == 1);
+        TST<Integer> tst = new TST<Integer>();
+        tst.put("she", 1);
+        assert(tst.get("she") == 1);
     }
 }

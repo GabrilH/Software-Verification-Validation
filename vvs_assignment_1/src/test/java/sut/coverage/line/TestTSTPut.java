@@ -10,15 +10,15 @@ public class TestTSTPut {
     @Test
     public void testWithNullKey() {
         assertThrows(IllegalArgumentException.class, () -> {
-            TST<Integer> st = new TST<Integer>();
-            st.put(null, 1);
+            TST<Integer> tst = new TST<Integer>();
+            tst.put(null, 1);
         });
     }
 
     @Test
     public void testWithoutContaining() {
-        TST<Integer> st = new TST<Integer>();
-        st.put("she", 1);
-        // nao tem assert?
+        TST<Integer> tst = new TST<Integer>();
+        tst.put("she", 1);
+        // nao tem assert? ou fazer get?
     }
 }
