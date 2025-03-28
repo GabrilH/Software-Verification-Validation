@@ -1,6 +1,14 @@
-as subdivisoes dos testes por pacotes e classes estao corretas?
-    - um pacote por paradigma, uma classe por método (algumas classes só têm 1 teste)?
-    - testes com o mesmo nome em pacotes diferentes?
+em geral:
+    - é suposto fazer testes extensos ou apenas suficientes para fazer coverage?
+        - p.ex testar o size.
+    - as subdivisoes dos testes por pacotes e classes estao corretas?
+        - um pacote por paradigma, uma classe por método (algumas classes só têm 1 teste)?
+        - testes com o mesmo nome em pacotes diferentes? e classes com mesmo nome?
+    - nome dos testes está adequado?
+    - é necessário adicionar mensagem aos asserts?
+    - o que é suposto meter no relatório?
+        - fotos dos grafos e dos tests coverage dos sites?
+        - tabelas de defs/uses?
 
 line e branch coverage: 
     juntos ou separados? só diferem no longestPrefixOf pelo if then estarem na mesma linha
@@ -18,10 +26,7 @@ no all-coupling:
     - definir/usar x.left é considerado definir/usar x? ou são variaveis separadas?
     - é preciso fazer node antes de chamar put quando se chama com d+1?
 
-em geral:
-    - é suposto fazer testes extensos ou apenas suficientes para fazer coverage?
-        - p.ex testar o size.
-    - o que é suposto meter no relatório?
-        - fotos dos grafos e dos tests coverage dos sites?
-        - tabelas de defs/uses?
+no logicbased:
+    - toda a combinação de clausulas de um mesmo predicado
+    tem que ser testada no mesmo teste unitario?
 
