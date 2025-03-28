@@ -13,7 +13,7 @@ public class TestTSTKeys {
     public void testWithoutKeys() {
         TST<Integer> tst = new TST<Integer>();
         Iterator<String> it = tst.keys().iterator();
-        assertTrue(it.hasNext() == false);
+        assertFalse(it.hasNext(),"has no keys");
     }
 
     @Test
@@ -23,10 +23,10 @@ public class TestTSTKeys {
         tst.put("shore", 2);
         
         Iterator<String> it = tst.keys().iterator();
-        assertTrue(it.hasNext());
+        assertTrue(it.hasNext(), "has 1 key");
         it.next();
-        assertTrue(it.hasNext());
+        assertTrue(it.hasNext(), "has 2 keys");
         it.next();
-        assertFalse(it.hasNext());
+        assertFalse(it.hasNext(), "has no keys");
     }
 }

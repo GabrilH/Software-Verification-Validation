@@ -34,6 +34,6 @@ public class TestTSTGet {
     public void testWithKeyAndWithPut() {
         TST<Integer> tst = new TST<Integer>();
         tst.put("she", 1);
-        assert(tst.get("she") == 1);
+        assertEquals(Integer.valueOf(1), tst.get("she"));
     }
 }

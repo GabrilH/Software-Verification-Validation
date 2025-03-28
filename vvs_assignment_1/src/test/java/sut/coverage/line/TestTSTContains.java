@@ -19,6 +19,6 @@ public class TestTSTContains {
     public void testWithPut() {
         TST<Integer> tst = new TST<Integer>();
         tst.put("she", 1);
-        assert(tst.contains("she"));
+        assertTrue(tst.contains("she"), "contains key 'she' after put");
     }
 }

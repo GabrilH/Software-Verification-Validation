@@ -14,6 +14,6 @@ public class TestTSTKeysThatMatch {
         // linhas 210, 211, 212
         TST<Integer> tst = new TST<Integer>();
         Iterator<String> it = tst.keysThatMatch("sh...").iterator();
-        assertFalse(it.hasNext());
+        assertFalse(it.hasNext(), "has no keys");
     }
 }
