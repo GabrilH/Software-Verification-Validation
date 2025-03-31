@@ -14,7 +14,7 @@ em geral:
     - o que é suposto meter no relatório?
         - fotos dos grafos e dos tests coverage dos sites?
         - tabelas de defs/uses?
-        - R: não perguntei
+        - R: não perguntei, mas deve-se meter screenshots dos grafos e ferramentas usadas
 
 line e branch coverage: 
     juntos ou separados? só diferem no longestPrefixOf pelo if then estarem na mesma linha
@@ -37,11 +37,15 @@ no all-coupling:
     - definir/usar x.left é considerado definir/usar x? ou são variaveis separadas?
         - R: é wtv, mas o stor disse pode ser apenas X.
     - o c é relevante?
-        - R: não perguntei, mas deve ter a ver com a questão anterior
+        - R: como não tem use, é irrelevante
     - é preciso fazer node antes de chamar put quando se chama com d+1?
         - R: disse para experimentar qualquer forma, mas que não vai estar a verificar isso
 
 no logicbased:
     - toda a combinação de clausulas de um mesmo predicado
     tem que ser testada no mesmo teste unitario?
+        - R: 
+
+no ISP:
+    - R: cada characteristics tem que ser repartida em varias partições, a maior parte é binario
 

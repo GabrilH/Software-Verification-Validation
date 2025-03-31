@@ -42,4 +42,11 @@ public class IndexOfTest {
 		int[] array = {};
 		assertEquals(IndexOf.indexOf(array, 7), -1);
 	}
+
+	@Test
+	public void testIndexOfFindsSecond (){
+		IndexOf indexOf = new IndexOf();
+		int[] array = {5, 7};
+		assertEquals(IndexOf.indexOf(array, 7), 1);
+	}
 }
