@@ -25,6 +25,17 @@ public class TestTSTKeysWithPrefix {
     }
 
     @Test
+    public void testWithKeyLength1() {
+        TST<Integer> tst = new TST<Integer>();
+        tst.put("a", 1);
+        
+        Iterator<String> it = tst.keysWithPrefix("a").iterator();
+        assertTrue(it.hasNext(), "has 1 key with prefix 'a'");
+        it.next();
+        assertFalse(it.hasNext(), "has no more keys");
+    }
+
+    @Test
     public void testTwoKeysWithPrefix() {
         TST<Integer> tst = new TST<Integer>();
         tst.put("shells", 1);
