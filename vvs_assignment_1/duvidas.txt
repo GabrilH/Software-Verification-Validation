@@ -1,30 +1,44 @@
 em geral:
     - é suposto fazer testes extensos ou apenas suficientes para fazer coverage?
         - p.ex testar o size.
+            - R: não é preciso
     - as subdivisoes dos testes por pacotes e classes estao corretas?
         - um pacote por paradigma, uma classe por método (algumas classes só têm 1 teste)?
         - testes com o mesmo nome em pacotes diferentes? e classes com mesmo nome?
+            - R: parece sim
+
     - nome dos testes está adequado?
+        - R: parece sim
     - é necessário adicionar mensagem aos asserts?
+        - R: não perguntei
     - o que é suposto meter no relatório?
         - fotos dos grafos e dos tests coverage dos sites?
         - tabelas de defs/uses?
+        - R: não perguntei
 
 line e branch coverage: 
     juntos ou separados? só diferem no longestPrefixOf pelo if then estarem na mesma linha
+        - R: estar praticamente igual é chill
     é suposto ir para dentro dos métodos privados?
+        - R: vai responder no moodle
     como testar funções que não retornam nada? p.ex put. fazer assert que o TST ficou com a key lá?
+        - R: testa-se outras funcoes
     no line coverage referenciamos o nº de linha do ficheiro ou nº da linha do método?
+        - R: não perguntei
 
 edgepair:
     - no site https://cs.gmu.edu:8443/offutt/coverage/GraphCoverage o 1º algoritmo de 
     edgepair dá que [11,6,16] é infeasible, mas o 2º não. É normal?
+        - R: cagativo, o algoritmo pode ter um bug qualquer
 
 no all-coupling:
     - é preciso analisar o key.charAt(d)? ou apenas os put?
-    - o c é relevante?
+        - R: apenas os put
     - definir/usar x.left é considerado definir/usar x? ou são variaveis separadas?
+        - R: é wtv, mas o stor disse pode ser apenas X.
+    - o c é relevante?
     - é preciso fazer node antes de chamar put quando se chama com d+1?
+        - R: disse para experimentar qualquer forma, mas que não vai estar a verificar isso
 
 no logicbased:
     - toda a combinação de clausulas de um mesmo predicado
