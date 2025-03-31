@@ -37,6 +37,7 @@ no all-coupling:
     - definir/usar x.left é considerado definir/usar x? ou são variaveis separadas?
         - R: é wtv, mas o stor disse pode ser apenas X.
     - o c é relevante?
+        - R: não perguntei, mas deve ter a ver com a questão anterior
     - é preciso fazer node antes de chamar put quando se chama com d+1?
         - R: disse para experimentar qualquer forma, mas que não vai estar a verificar isso
 
