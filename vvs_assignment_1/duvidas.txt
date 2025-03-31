@@ -44,7 +44,7 @@ no all-coupling:
 no logicbased:
     - toda a combinação de clausulas de um mesmo predicado
     tem que ser testada no mesmo teste unitario?
-        - R: 
+        - R: não perguntei
 
 no ISP:
     - R: cada characteristics tem que ser repartida em varias partições, a maior parte é binario
