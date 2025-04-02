@@ -9,6 +9,7 @@ public class TestTSTPut {
     
     @Test
     public void testWithNullKey() {
+        // lines 1,2,3
         assertThrows(IllegalArgumentException.class, () -> {
             TST<Integer> tst = new TST<Integer>();
             tst.put(null, 1);
@@ -17,9 +18,10 @@ public class TestTSTPut {
 
     @Test
     public void testWithoutContaining() {
+        // lines 1,2,4,5,6
         TST<Integer> tst = new TST<Integer>();
         tst.put("she", 1);
-        // nao tem assert? ou fazer get?
+        assertTrue(tst.contains("she"));
     }
 
     // é necessario?

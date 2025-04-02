@@ -9,7 +9,7 @@ public class TestTSTLongestPrefixOf {
     
     @Test
     public void testWithNullQuery() {
-        // linhas 136, 137
+        // lines 1,2,3
         assertThrows(IllegalArgumentException.class, () -> {
             new TST<Integer>().longestPrefixOf(null);
         });
@@ -17,19 +17,26 @@ public class TestTSTLongestPrefixOf {
 
     @Test
     public void testWithEmptyQuery() {
-        // linhas 136, 138, 139
+        // lines 1,2,4,5
         TST<Integer> tst = new TST<Integer>();
         assertNull(tst.longestPrefixOf(""));
     }
 
-    //para fazer line coverage
-    //basta fazer este teste que passa pelo middle
     @Test
     public void testMiddleMatchThenExit() {
-        // linhas 136, 138, 140, 141, 142, 143, 144, 
-        // 145, 146, 148, 149, 150, 151, 154
+        // lines 1,2,4,6-20
         TST<Integer> tst = new TST<>();
         tst.put("c", 1);
         assertEquals("c", tst.longestPrefixOf("c"));
+    }
+
+    @Test
+    public void testWithQueryPrefixOfPut() {
+        // Test added after PIT mutation testing
+        // lines 1,2,4,6-20
+        TST<Integer> tst = new TST<>();
+        tst.put("c", 1);
+        tst.put("cab", 1);
+        assertEquals("c", tst.longestPrefixOf("ca"));
     }
 }

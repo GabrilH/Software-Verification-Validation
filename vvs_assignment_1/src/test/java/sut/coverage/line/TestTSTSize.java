@@ -9,6 +9,7 @@ public class TestTSTSize {
     
     @Test
     public void testSize() {
+        // lines 1,2
         TST<Integer> tst = new TST<>();
         assertEquals(0, tst.size());
     }

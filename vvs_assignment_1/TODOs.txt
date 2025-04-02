@@ -1,0 +1,2 @@
+- adicionar comentarios em todos os asserts
+- verificar que testes unitarios faltam adicionar comentarios

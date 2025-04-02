@@ -49,3 +49,8 @@ no logicbased:
 no ISP:
     - R: cada characteristics tem que ser repartida em varias partições, a maior parte é binario
 
+no PIT:
+    - como é suposto ver a coverage por método? correr o PIT um a um por cada criteria?
+    - basta screenshot de um dos coverages (são todos iguais) e do line e mutation não killed?
+    - "add new tests to improve mutation coverage." coverage de apenas o longestPrefixOf ou de todo o TST?
+
