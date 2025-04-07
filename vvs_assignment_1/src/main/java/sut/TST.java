@@ -232,14 +232,19 @@ public class TST<T> {
     
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+        if (this == obj) return true; // referências iguais
+        if (obj == null || this.getClass() != obj.getClass()) return false; // classes diferentes
         TST<?> other = (TST<?>) obj;
-        if (this.n != other.n) return false;
-        return equals(this.root, other.root);
+        if (this.n != other.n) return false; // TST com tamanhos diferentes
+        if (this.root == other.root) return true; // TST com referências de raízes iguais
+        if (this.root == null || other.root == null) return false; // TST com raízes nulas (e diferentes)
+        if (this.root.getClass() != other.root.getClass()) return false; // TST com Nodes de classes diferentes
+        @SuppressWarnings("unchecked")
+        TST<T> otherTST = (TST<T>) other;
+        return equals(this.root, otherTST.root); // Verificar igualdade de todos os Nodes
     }
 
-    private boolean equals(Node<T> a, Node<?> b) {
+    private boolean equals(Node<T> a, Node<T> b) {
         if (a == null && b == null) return true;
         if (a == null || b == null) return false;
         if (a.c != b.c) return false;
