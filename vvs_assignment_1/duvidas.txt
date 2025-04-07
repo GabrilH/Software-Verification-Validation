@@ -54,3 +54,10 @@ no PIT:
     - basta screenshot de um dos coverages (são todos iguais) e do line e mutation não killed?
     - "add new tests to improve mutation coverage." coverage de apenas o longestPrefixOf ou de todo o TST?
 
+no QuickCheck:
+    - o delete é suposto fazer o quê? remover uma key? basta meter o valor da key a null ou tem-se
+    que remover mesmo todos os caracteres da key da tree?
+
+    - keysWithPrefix: há muitos inuteis, é suposto gerar keys mais uteis?
+
+

@@ -251,4 +251,34 @@ public class TST<T> {
         if ((a.val == null && b.val != null) || (a.val != null && !a.val.equals(b.val))) return false;
         return equals(a.left, b.left) && equals(a.mid, b.mid) && equals(a.right, b.right);
     }
+
+    public void delete() {
+        root = null;
+        n = 0;
+    }
+
+    // public void deleteKey(String key) {
+    //     if (key == null) 
+    //     	throw new IllegalArgumentException("calls delete() with null key");
+    //     if (!contains(key)) 
+    //     	return;
+    //     n--;
+    //     root = delete(root, key, 0);
+    // }
+
+    // private Node<T> delete(Node<T> x, String key, int d) {
+    //     if (x == null) 
+    //     	return null;
+    //     char c = key.charAt(d);
+    //     if      (c < x.c)              x.left  = delete(x.left,  key, d);
+    //     else if (c > x.c)              x.right = delete(x.right, key, d);
+    //     else if (d < key.length() - 1) x.mid   = delete(x.mid,   key, d+1);
+    //     else {
+    //         if (x.val != null)
+    //             x.val = null;
+    //     }
+    //     if (x.left == null && x.mid == null && x.right == null && x.val == null) 
+    //     	return null; // Se o nó não tem filhos e não tem valor, retornar null
+    //     return x; // Retornar o nó atualizado
+    // }
 }
