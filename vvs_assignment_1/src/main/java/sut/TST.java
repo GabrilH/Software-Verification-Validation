@@ -229,56 +229,59 @@ public class TST<T> {
         if (c == '.' || c > x.c) 
         	collect(x.right, prefix, i, pattern, queue);
     }
+
+    /**
+     * Deletes the key from the symbol table.
+     * @param key the key
+     * @throws IllegalArgumentException if {@code key} is {@code null}
+     */
+    public void deleteKey(String key) {
+        if (key == null) 
+        	throw new IllegalArgumentException("calls delete() with null key");
+        if (!contains(key)) 
+        	return;
+        n--;
+        this.put(key, null);
+    }
+
+    /**
+     * Returns a clone of the TST.
+     * The clone is a shallow copy of the TST, meaning that the keys and values are not cloned.
+     * 
+     * @return a clone of the TST
+     */
+    public TST<T> clone() {
+        TST<T> clone = new TST<>();
+        for (String key : this.keys()) {
+            clone.put(key, this.get(key));
+        }
+        return clone;
+    }
     
+    
+    /**
+     * Compares this TST with the specified object for equality.
+     * Two TSTs are considered equal if they have the same size and contain the same
+     * key-value pairs. The comparison checks if all keys in this TST exist in the other
+     * TST and have the same associated values.
+     *
+     * @param obj the object to compare with this TST
+     * @return {@code true} if the specified object is equal to this TST,
+     *         {@code false} otherwise
+     */
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true; // referências iguais
-        if (obj == null || this.getClass() != obj.getClass()) return false; // classes diferentes
+        if (this == obj) return true; // equal references
+        if (obj == null || getClass() != obj.getClass()) return false; // null or different classes
         TST<?> other = (TST<?>) obj;
-        if (this.n != other.n) return false; // TST com tamanhos diferentes
-        if (this.root == other.root) return true; // TST com referências de raízes iguais
-        if (this.root == null || other.root == null) return false; // TST com raízes nulas (e diferentes)
-        if (this.root.getClass() != other.root.getClass()) return false; // TST com Nodes de classes diferentes
-        @SuppressWarnings("unchecked")
-        TST<T> otherTST = (TST<T>) other;
-        return equals(this.root, otherTST.root); // Verificar igualdade de todos os Nodes
+        if (this.size() != other.size()) return false; // different sizes
+
+        // Check if all pair of keys and values are equal
+        for (String key : this.keys()) {
+            if (!other.contains(key) || !Objects.equals(this.get(key), other.get(key))) {
+                return false;
+            }
+        }
+        return true;
     }
-
-    private boolean equals(Node<T> a, Node<T> b) {
-        if (a == null && b == null) return true;
-        if (a == null || b == null) return false;
-        if (a.c != b.c) return false;
-        if ((a.val == null && b.val != null) || (a.val != null && !a.val.equals(b.val))) return false;
-        return equals(a.left, b.left) && equals(a.mid, b.mid) && equals(a.right, b.right);
-    }
-
-    public void delete() {
-        root = null;
-        n = 0;
-    }
-
-    // public void deleteKey(String key) {
-    //     if (key == null) 
-    //     	throw new IllegalArgumentException("calls delete() with null key");
-    //     if (!contains(key)) 
-    //     	return;
-    //     n--;
-    //     root = delete(root, key, 0);
-    // }
-
-    // private Node<T> delete(Node<T> x, String key, int d) {
-    //     if (x == null) 
-    //     	return null;
-    //     char c = key.charAt(d);
-    //     if      (c < x.c)              x.left  = delete(x.left,  key, d);
-    //     else if (c > x.c)              x.right = delete(x.right, key, d);
-    //     else if (d < key.length() - 1) x.mid   = delete(x.mid,   key, d+1);
-    //     else {
-    //         if (x.val != null)
-    //             x.val = null;
-    //     }
-    //     if (x.left == null && x.mid == null && x.right == null && x.val == null) 
-    //     	return null; // Se o nó não tem filhos e não tem valor, retornar null
-    //     return x; // Retornar o nó atualizado
-    // }
 }
