@@ -20,7 +20,7 @@ public class KeyGenerator extends Generator<String> {
     // public static final int MAX_LENGTH = 10;
 
     public static final String KEYS_FILE = "data/someWords.txt";
-    public static final int TOTAL_KEYS = 8;
+    public static final int TOTAL_KEYS = 7;
 
     public KeyGenerator() {
         super(String.class);
@@ -31,6 +31,8 @@ public class KeyGenerator extends Generator<String> {
         try {
             List<String> words = Files.readAllLines(Paths.get(KEYS_FILE));
             String[] wordArray = String.join(" ", words).split("\\s+");
+            // only unique words
+            wordArray = java.util.Arrays.stream(wordArray).distinct().toArray(String[]::new);
             return wordArray[random.nextInt(wordArray.length)];
         } catch (IOException e) {
             throw new RuntimeException("Error reading words from file", e);

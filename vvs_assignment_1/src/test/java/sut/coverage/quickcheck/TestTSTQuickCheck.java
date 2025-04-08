@@ -100,19 +100,15 @@ public class TestTSTQuickCheck {
     }
 
     @Property
-    public void stricterPrefixReturnsSubset(@From(TrieGenerator.class) TST<Integer> trie) {
+    public void stricterPrefixReturnsSubset(
+        @From(TrieGenerator.class) TST<Integer> trie,
+        @From(KeyGenerator.class) String longPrefix) {
         
-        // To get a useful prefix to test with we get a key from the trie.
-        // We assume that the trie has at least one key, so we can get a prefix.
-        assumeTrue(trie.size() > 0);
-        Iterable<String> keys = trie.keys();
-        
-        // We choose the first key as the prefix to test with.
-        String longPrefix = keys.iterator().next();
-        // Substring the prefix to get a shorter and more useful prefix.
-        longPrefix = longPrefix.substring(0, longPrefix.length() - longPrefix.length() / 2);
         System.out.println("Testing with longPrefix: " + longPrefix);
         Iterable<String> longPrefixKeys = trie.keysWithPrefix(longPrefix);
+
+        // Useless to test when longPrefix doesn't match any key
+        assumeTrue(longPrefixKeys.iterator().hasNext());
 
         // Create shorter prefixes from the long prefix
         // by removing the last character one by one.
