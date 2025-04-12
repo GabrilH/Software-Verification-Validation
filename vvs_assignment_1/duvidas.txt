@@ -59,6 +59,7 @@ no QuickCheck:
     que remover mesmo todos os caracteres da key da tree?
     - como comparar o initial e final value? temos que implementar função clone?
     - é possível gerar Tries com values de tipo T ou tem que ser um tipo concreto (int)?
+    - para inserir, gera-se keys com strings aleatórias? e os values, bastam testar com ints?
     - keysWithPrefix: há muitos inuteis, é suposto gerar keys mais uteis?
 
 
