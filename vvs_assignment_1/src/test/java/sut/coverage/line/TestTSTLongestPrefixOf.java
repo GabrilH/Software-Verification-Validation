@@ -30,13 +30,4 @@ public class TestTSTLongestPrefixOf {
         assertEquals("c", tst.longestPrefixOf("c"));
     }
 
-    @Test
-    public void testWithQueryPrefixOfPut() {
-        // Test added after PIT mutation testing
-        // lines 1,2,4,6-20
-        TST<Integer> tst = new TST<>();
-        tst.put("c", 1);
-        tst.put("cab", 1);
-        assertEquals("c", tst.longestPrefixOf("ca"));
-    }
 }

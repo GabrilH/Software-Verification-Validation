@@ -1,4 +1,5 @@
 - adicionar comentarios em todos os asserts
 - verificar que testes unitarios faltam adicionar comentarios
 - rever o allcoupling (talvez falta testes com last defs de X)
+    R: um def (mesmo que varios) para todos os uses
 - verificar se a subdivisao dos ISP está correta

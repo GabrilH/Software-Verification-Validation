@@ -57,9 +57,14 @@ no PIT:
 no QuickCheck:
     - o delete é suposto fazer o quê? remover uma key? basta meter o valor da key a null ou tem-se
     que remover mesmo todos os caracteres da key da tree?
+        R: sim remover uma key
     - como comparar o initial e final value? temos que implementar função clone?
+        R: se der jeito
     - é possível gerar Tries com values de tipo T ou tem que ser um tipo concreto (int)?
+        R: pode ser concreto e basta init
     - para inserir, gera-se keys com strings aleatórias? e os values, bastam testar com ints?
+        R: basta init
     - keysWithPrefix: há muitos inuteis, é suposto gerar keys mais uteis?
+        R: fazer download de um dicionario, ou adicionar prefixes e testar
 
 
