@@ -9,7 +9,7 @@ import sut.TST;
 public class TrieGenerator<T> extends Generator<TST<Integer>> {
 
     public static final int MIN_TRIE_SIZE = 0;
-    public static final int MAX_TRIE_SIZE = KeyGenerator.TOTAL_KEYS;
+    public static final int MAX_TRIE_SIZE = KeyListGenerator.MAX_SIZE;
 
     private static final int MIN_VALUE = -100000;
     private static final int MAX_VALUE = 100000;

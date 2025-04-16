@@ -8,7 +8,7 @@ import com.pholser.junit.quickcheck.random.SourceOfRandomness;
 
 public class KeyListGenerator extends Generator<List<String>> {
 
-    public static final int MAX_SIZE = KeyGenerator.TOTAL_KEYS;
+    public static final int MAX_SIZE = 20;
 
     public KeyListGenerator(Class<List<String>> type) {
         super(type);

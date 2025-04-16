@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeTrue;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import org.junit.runner.RunWith;
@@ -102,13 +103,36 @@ public class TestTSTQuickCheck {
     @Property
     public void stricterPrefixReturnsSubset(
         @From(TrieGenerator.class) TST<Integer> trie,
-        @From(KeyGenerator.class) String longPrefix) {
+        @From(KeyListGenerator.class) List<String> keys,
+        int randomSeed) {
         
-        System.out.println("Testing with longPrefix: " + longPrefix);
-        Iterable<String> longPrefixKeys = trie.keysWithPrefix(longPrefix);
+        // Get all keys from the trie
+        Iterable<String> allKeys = trie.keys();
+        Iterator<String> iterator = allKeys.iterator();
+        int trieSize = trie.size();
 
-        // Useless to test when longPrefix doesn't match any key
-        assumeTrue(longPrefixKeys.iterator().hasNext());
+        assumeTrue(trieSize > 0);
+
+        // Generate a random index between 0 and trieSize (exclusive)
+        int randomIndex = Math.abs(randomSeed) % trieSize;
+
+        // Iterate through the keys to get the random key
+        String longPrefix = null;
+        for (int i = 0; i <= randomIndex; i++) {
+            longPrefix = iterator.next();
+        }
+        System.out.println("Randomly selected key: " + longPrefix);
+
+        // Insert new keys with prefix longPrefix
+        for (int i = 0; i < keys.size(); i++) {
+            String newKey = longPrefix + keys.get(i);
+            trie.put(newKey, Math.abs(randomSeed) % 1000);
+            System.out.println("Inserted new key: " + newKey);
+        }
+
+        // Get all keys with the long prefix
+        Iterable<String> longPrefixKeys = trie.keysWithPrefix(longPrefix);
+        System.out.println("All keys with same prefix as the original: " + longPrefixKeys);
 
         // Create shorter prefixes from the long prefix
         // by removing the last character one by one.
@@ -121,7 +145,7 @@ public class TestTSTQuickCheck {
                 boolean found = false;
                 for (String shortKey : shortPrefixKeys) {
                     if (key.equals(shortKey)) {
-                        System.out.println("Found key: " + key + " from longPrefixes: " + longPrefixKeys + " with shortPrefix: " + shortPrefix);
+                        System.out.println("Found key: " + key + " from longPrefixes with shortPrefix: " + shortPrefix);
                         found = true;
                         break;
                     }
