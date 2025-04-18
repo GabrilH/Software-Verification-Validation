@@ -9,6 +9,7 @@ public class TestTSTSize {
     
     @Test
     public void testSize() {
+        // No branches
         TST<Integer> tst = new TST<>();
         assertEquals(0, tst.size());
     }

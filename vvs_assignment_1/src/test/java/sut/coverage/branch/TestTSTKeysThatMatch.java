@@ -11,7 +11,7 @@ public class TestTSTKeysThatMatch {
     
     @Test
     public void testEmptyKeys() {
-        // linhas 210, 211, 212
+        // No branches
         TST<Integer> tst = new TST<Integer>();
         Iterator<String> it = tst.keysThatMatch("sh...").iterator();
         assertFalse(it.hasNext(), "has no keys");

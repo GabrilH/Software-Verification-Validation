@@ -11,6 +11,7 @@ public class TestTSTKeys {
 
     @Test
     public void testWithoutKeys() {
+        // No branches
         TST<Integer> tst = new TST<Integer>();
         Iterator<String> it = tst.keys().iterator();
         assertFalse(it.hasNext(),"has no keys");

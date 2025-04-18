@@ -11,6 +11,7 @@ public class TestTSTKeysWithPrefix {
     
     @Test
     public void testWithNullPrefix() {
+        // B1
         assertThrows(IllegalArgumentException.class, () -> {
             TST<Integer> tst = new TST<Integer>();
             tst.keysWithPrefix(null);
@@ -19,6 +20,7 @@ public class TestTSTKeysWithPrefix {
 
     @Test
     public void testWithEmptyPrefix() {
+        // !B1, B2
         TST<Integer> tst = new TST<Integer>();
         Iterator<String> it = tst.keysWithPrefix("").iterator();
         assertFalse(it.hasNext(),"has no keys with empty prefix");
@@ -26,6 +28,7 @@ public class TestTSTKeysWithPrefix {
 
     @Test
     public void testWithKeyLength1() {
+        // !B1, !B2, B3
         TST<Integer> tst = new TST<Integer>();
         tst.put("a", 1);
         
@@ -37,6 +40,7 @@ public class TestTSTKeysWithPrefix {
 
     @Test
     public void testTwoKeysWithPrefix() {
+        // !B1, !B2, !B3
         TST<Integer> tst = new TST<Integer>();
         tst.put("shells", 1);
         tst.put("sheet", 2);
