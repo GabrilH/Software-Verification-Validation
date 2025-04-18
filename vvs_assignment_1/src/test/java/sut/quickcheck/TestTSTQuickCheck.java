@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 
 import com.pholser.junit.quickcheck.From;
 import com.pholser.junit.quickcheck.Property;
+import com.pholser.junit.quickcheck.generator.InRange;
 import com.pholser.junit.quickcheck.runner.JUnitQuickcheck;
 
 import generators.KeyGenerator;
@@ -52,7 +53,6 @@ public class TestTSTQuickCheck {
 
     @Property
     public void afterDeleteTreeShouldBeEmpty(@From(TrieGenerator.class) TST<Integer> trie) {
-        assumeTrue(trie.size() > 0);
 
         // Get trie keys
         Iterable<String> keys = trie.keys();
@@ -61,7 +61,7 @@ public class TestTSTQuickCheck {
         // Delete all keys from the trie
         for (String key : keys) {
             System.out.println("Deleting key: " + key);
-            trie.deleteKey(key);
+            trie.delete(key);
         }
 
         System.out.println("Trie keys after deleting all keys: " + trie.keys());
@@ -81,6 +81,8 @@ public class TestTSTQuickCheck {
             @From(KeyGenerator.class) String key,
             int value) {
         
+        // Property does not hold for tries that already contain the key!
+        //
         // Assume that the initial trie does not yet contain the key
         // otherwise it may happen that by putting and removing the same key
         // the resulted trie is not equal to the initial trie which still contains the key.
@@ -93,7 +95,7 @@ public class TestTSTQuickCheck {
         trie.put(key, value);
         System.out.println("Trie keys after inserting key: " + key + " -> " + trie.keys());
 
-        trie.deleteKey(key);
+        trie.delete(key);
         System.out.println("Trie keys after deleting key: " + key + " -> " + trie.keys());
 
         assertTrue(trie.equals(trieInitial));
@@ -104,13 +106,14 @@ public class TestTSTQuickCheck {
     public void stricterPrefixReturnsSubset(
         @From(TrieGenerator.class) TST<Integer> trie,
         @From(KeyListGenerator.class) List<String> keys,
-        int randomSeed) {
+        @InRange(minInt = -100000, maxInt = 100000) int randomSeed) {
         
         // Get all keys from the trie
         Iterable<String> allKeys = trie.keys();
         Iterator<String> iterator = allKeys.iterator();
         int trieSize = trie.size();
-
+        
+        // If trie is empty, test is useless
         assumeTrue(trieSize > 0);
 
         // Generate a random index between 0 and trieSize (exclusive)
@@ -126,8 +129,8 @@ public class TestTSTQuickCheck {
         // Insert new keys with prefix longPrefix
         for (int i = 0; i < keys.size(); i++) {
             String newKey = longPrefix + keys.get(i);
-            trie.put(newKey, Math.abs(randomSeed) % 1000);
-            System.out.println("Inserted new key: " + newKey);
+            trie.put(newKey, randomSeed);
+            //System.out.println("Inserted new key: " + newKey);
         }
 
         // Get all keys with the long prefix
@@ -145,7 +148,7 @@ public class TestTSTQuickCheck {
                 boolean found = false;
                 for (String shortKey : shortPrefixKeys) {
                     if (key.equals(shortKey)) {
-                        System.out.println("Found key: " + key + " from longPrefixes with shortPrefix: " + shortPrefix);
+                        // System.out.println("Found key: " + key + " from longPrefixes with shortPrefix: " + shortPrefix);
                         found = true;
                         break;
                     }
