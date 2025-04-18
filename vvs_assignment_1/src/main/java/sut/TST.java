@@ -233,11 +233,13 @@ public class TST<T> {
     /**
      * Deletes the key from the symbol table.
      * @param key the key
-     * @throws IllegalArgumentException if {@code key} is {@code null}
+     * @throws IllegalArgumentException if {@code key} is {@code null} or if {@code key} is a empty string
      */
-    public void deleteKey(String key) {
-        if (key == null) 
-        	throw new IllegalArgumentException("calls delete() with null key");
+    public void delete(String key) {
+        if (key == null)
+            throw new IllegalArgumentException("calls get() with null argument");
+        if (key.length() == 0) 
+        	throw new IllegalArgumentException("key must have length >= 1");
         if (!contains(key)) 
         	return;
         n--;
