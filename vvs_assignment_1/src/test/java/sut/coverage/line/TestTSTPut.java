@@ -21,6 +21,6 @@ public class TestTSTPut {
         // lines 1,2,4,5,6
         TST<Integer> tst = new TST<Integer>();
         tst.put("she", 1);
-        assertTrue(tst.contains("she"));
+        assertEquals(Integer.valueOf(1), tst.get("she"));
     }
 }
