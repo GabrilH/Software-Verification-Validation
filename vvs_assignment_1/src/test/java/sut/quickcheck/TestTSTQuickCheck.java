@@ -1,4 +1,4 @@
-package sut.coverage.quickcheck;
+package sut.quickcheck;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -132,7 +132,7 @@ public class TestTSTQuickCheck {
 
         // Get all keys with the long prefix
         Iterable<String> longPrefixKeys = trie.keysWithPrefix(longPrefix);
-        System.out.println("All keys with same prefix as the original: " + longPrefixKeys);
+        System.out.println("All keys with same prefix as the original ("+ longPrefix + "): " + longPrefixKeys);
 
         // Create shorter prefixes from the long prefix
         // by removing the last character one by one.
