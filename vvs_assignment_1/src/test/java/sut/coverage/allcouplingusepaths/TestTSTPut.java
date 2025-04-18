@@ -17,7 +17,17 @@ public class TestTSTPut {
     }
 
     @Test
-    public void testValAllCUP() {
+    public void testVal1AllCUP() {
+        // Test (val: 1 -> v)
+        TST<Integer> tst = new TST<>();
+        tst.put("cc", 10);
+        tst.put("bb", 6);
+        tst.put("aa", 5);
+        assertEquals(Integer.valueOf(5), tst.get("aa"));
+    }
+
+    @Test
+    public void testVal2AllCUP() {
         // Test (val: 1 -> vii)
         TST<Integer> tst = new TST<>();
         tst.put("cc", 10);
@@ -27,8 +37,25 @@ public class TestTSTPut {
     }
 
     @Test
+    public void testVal3AllCUP() {
+        // Test (val: 1 -> ix)
+        TST<Integer> tst = new TST<>();
+        tst.put("cc", 10);
+        tst.put("ccb", 6);
+        assertEquals(Integer.valueOf(6), tst.get("ccb"));
+    }
+
+    @Test
+    public void testVal4AllCUP() {
+        // Test (val: 1 -> x)
+        TST<Integer> tst = new TST<>();
+        tst.put("cc", 10);
+        assertEquals(Integer.valueOf(10), tst.get("cc"));
+    }
+
+    @Test
     public void testX1AllCUP() {
-        // Test (x: 3 -> ii)
+        // Test (x: 1 -> ii)
         TST<Integer> tst = new TST<>();
         tst.put("aa", 10);
         assertEquals(Integer.valueOf(10), tst.get("aa"));
@@ -36,7 +63,7 @@ public class TestTSTPut {
 
     @Test
     public void testX2AllCUP() {
-        // Test (x: 1 -> ii)
+        // Test (x: 3 -> ii)
         TST<Integer> tst = new TST<>();
         tst.put("aa", 10);
         assertEquals(Integer.valueOf(10), tst.get("aa"));
@@ -86,7 +113,7 @@ public class TestTSTPut {
         TST<Integer> tst = new TST<>();
         tst.put("cc", 10);
         tst.put("ccb", 6);
-        assertEquals(Integer.valueOf(6), tst.get("cb"));
+        assertEquals(Integer.valueOf(6), tst.get("ccb"));
     }
 
     @Test
