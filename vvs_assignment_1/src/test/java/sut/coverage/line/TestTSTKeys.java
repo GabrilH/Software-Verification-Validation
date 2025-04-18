@@ -16,19 +16,4 @@ public class TestTSTKeys {
         Iterator<String> it = tst.keys().iterator();
         assertFalse(it.hasNext(),"has no keys");
     }
-
-    // @Test
-    // public void testWithKeys() {
-    //     // lines 1,2,3,4
-    //     TST<Integer> tst = new TST<Integer>();
-    //     tst.put("she", 1);
-    //     tst.put("shore", 2);
-        
-    //     Iterator<String> it = tst.keys().iterator();
-    //     assertTrue(it.hasNext(), "has 1 key");
-    //     it.next();
-    //     assertTrue(it.hasNext(), "has 2 keys");
-    //     it.next();
-    //     assertFalse(it.hasNext(), "has no keys");
-    // }
 }

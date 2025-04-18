@@ -23,12 +23,4 @@ public class TestTSTPut {
         tst.put("she", 1);
         assertTrue(tst.contains("she"));
     }
-
-    // é necessario?
-    // @Test
-    // public void testWithContaining() {
-    //     TST<Integer> tst = new TST<Integer>();
-    //     tst.put("she", 1);
-    //     tst.put("she", 2);
-    // }
 }
