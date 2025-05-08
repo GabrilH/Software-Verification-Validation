@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import org.junit.*;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
+import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 import com.gargoylesoftware.htmlunit.HttpMethod;
 import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
 import com.gargoylesoftware.htmlunit.WebClient;
@@ -217,6 +218,222 @@ public class TestIndex {
 //		for (NameValuePair parameter : parameters) {
 //			System.out.println(parameter.getName() + " = " + parameter.getValue());
 //		}
+	}
+
+	// insert two new addresses for an existing customer, then the table of
+	// addresses of that client includes those addresses and its total row size
+	// increases by two;
+	@Test
+	public void addTwoAddressesToCustomerTest() throws IOException {
+
+		final String[][] ADDRESSES = {
+			// ADDRESS, DOOR, POSTAL_CODE, LOCALITY
+			{"Rua da Liberdade, 1", "1A", "1000-001", "Lisboa"},
+			{"Rua da Liberdade, 2", "2A", "1000-002", "Lisboa"}
+		};
+		
+		// first: get all customers
+		HtmlAnchor getCustomersLink = page.getAnchorByHref("GetAllCustomersPageController");
+		HtmlPage nextPage = (HtmlPage) getCustomersLink.openLinkInNewWindow();
+		final HtmlTable table = nextPage.getHtmlElementById("clients");
+
+		// second: get the first customer's vat
+		final HtmlTableRow row = table.getRow(1); // first row is the header
+		final String VAT = row.getCell(2).asText();
+
+		System.out.println("VAT: " + VAT);
+
+		// third: get initial number of addresses for that customer with a GET request
+		java.net.URL url = new java.net.URL(APPLICATION_URL+"GetCustomerPageController");
+		WebRequest request = new WebRequest(url, HttpMethod.GET);
+
+		// set the request parameters
+		List<NameValuePair> requestParameters = new ArrayList<NameValuePair>();
+		requestParameters.add(new NameValuePair("vat", VAT));
+		request.setRequestParameters(requestParameters);
+		
+		HtmlPage reportPage = webClient.getPage(request);
+		assertEquals(HttpMethod.GET, reportPage.getWebResponse().getWebRequest().getHttpMethod());
+		assertEquals("Customer Info", reportPage.getTitleText());
+
+		// get the table of addresses
+		HtmlTable initialTableAddresses = null;
+		int initialNumberOfAddresses = 0;
+		try {
+			initialTableAddresses = reportPage.getHtmlElementById("addressesTable");
+			initialNumberOfAddresses = initialTableAddresses.getRowCount() - 1; // -1 for header
+		} catch (ElementNotFoundException e) {
+			System.out.println("No addresses table found, assuming initial number of addresses is 0.");
+		}
+		System.out.println("Initial table of addresses:");
+		System.out.println("Num of addresses: " + initialNumberOfAddresses);
+		System.out.println(initialTableAddresses.asText());
+	
+		// fourth: add address to customer via form
+		for (String[] address : ADDRESSES) {
+			HtmlAnchor addAddressLink = page.getAnchorByHref("addAddressToCustomer.html");
+			HtmlPage addAddressPage = (HtmlPage) addAddressLink.openLinkInNewWindow();
+			assertEquals("Enter Address", addAddressPage.getTitleText());
+
+			// place data at form
+			HtmlForm addAddressForm = addAddressPage.getForms().get(0);
+			HtmlInput vatInput = addAddressForm.getInputByName("vat");
+			vatInput.setValueAttribute(VAT);
+			HtmlInput addressInput = addAddressForm.getInputByName("address");
+			addressInput.setValueAttribute(address[0]);
+			HtmlInput doorInput = addAddressForm.getInputByName("door");
+			doorInput.setValueAttribute(address[1]);
+			HtmlInput postalCodeInput = addAddressForm.getInputByName("postalCode");
+			postalCodeInput.setValueAttribute(address[2]);
+			HtmlInput localityInput = addAddressForm.getInputByName("locality");
+			localityInput.setValueAttribute(address[3]);
+
+			// submit form
+			HtmlInput submit = addAddressForm.getInputByName("submit");
+			reportPage = submit.click();
+			assertEquals("Customer Info", reportPage.getTitleText());
+		}
+
+		// fifth: check if the number of addresses increased by two and that the added addresses are in the table
+
+		// get the table of addresses
+		final HtmlTable finalTableAddresses = reportPage.getHtmlElementById("addressesTable");
+		final int finalNumberOfAddresses = finalTableAddresses.getRowCount() - 1; // -1 for header
+		System.out.println("\nFinal table of addresses:");
+		System.out.println("Num of addresses: " + finalNumberOfAddresses);
+		System.out.println(finalTableAddresses.asText());
+		assertEquals(initialNumberOfAddresses + ADDRESSES.length, finalNumberOfAddresses);
+
+		// check if the addresses are in the table
+		for (int i = 0; i < ADDRESSES.length; i++) {
+			final HtmlTableRow rowAddress = finalTableAddresses.getRow(initialNumberOfAddresses + i + 1); // first row is the header
+			assertEquals(ADDRESSES[i][0], rowAddress.getCell(0).asText());
+			assertEquals(ADDRESSES[i][1], rowAddress.getCell(1).asText());
+			assertEquals(ADDRESSES[i][2], rowAddress.getCell(2).asText());
+			assertEquals(ADDRESSES[i][3], rowAddress.getCell(3).asText());
+		}
+	
+	}
+
+	// insert two new customers and check if all the information is properly
+	// listed in the List All Customers use case;
+	@Test
+	public void insertTwoCustomersTest() throws IOException {
+
+		final String[][] CUSTOMERS = {
+			// {"VAT", "DESIGNATION", "PHONE"}
+			{"240985532", "FCUL", "217500000"},
+			{"264862198", "IST", "217500001"}
+		};
+
+		// first: insert two new customers
+		for (String[] customer : CUSTOMERS) {
+			HtmlAnchor addCustomerLink = page.getAnchorByHref("addCustomer.html");
+			HtmlPage nextPage = (HtmlPage) addCustomerLink.openLinkInNewWindow();
+			assertEquals("Enter Name", nextPage.getTitleText());
+
+			// place data at form
+			HtmlForm addCustomerForm = nextPage.getForms().get(0);
+			HtmlInput vatInput = addCustomerForm.getInputByName("vat");
+			vatInput.setValueAttribute(customer[0]);
+			HtmlInput designationInput = addCustomerForm.getInputByName("designation");
+			designationInput.setValueAttribute(customer[1]);
+			HtmlInput phoneInput = addCustomerForm.getInputByName("phone");
+			phoneInput.setValueAttribute(customer[2]);
+
+			// submit form
+			HtmlInput submit = addCustomerForm.getInputByName("submit");
+
+			// check if report page includes the proper values
+			HtmlPage reportPage = submit.click();
+			String textReportPage = reportPage.asText();
+			assertEquals("Customer Info", reportPage.getTitleText());
+			assertTrue(textReportPage.contains(customer[1]));
+			assertTrue(textReportPage.contains(customer[2]));
+		}
+
+		// second: check if the customers are in the list of all customers
+		HtmlAnchor getCustomersLink = page.getAnchorByHref("GetAllCustomersPageController");
+		HtmlPage nextPage = (HtmlPage) getCustomersLink.openLinkInNewWindow();
+		assertEquals("Customers Info", nextPage.getTitleText());
+
+		final HtmlTable tableAfterAdd = nextPage.getHtmlElementById("clients");
+		System.out.println("Table after adding:");
+		System.out.println(tableAfterAdd.asText());
+		for (String[] customer : CUSTOMERS) {
+			assertTrue(tableAfterAdd.asText().contains(customer[0]));
+			assertTrue(tableAfterAdd.asText().contains(customer[1]));
+			assertTrue(tableAfterAdd.asText().contains(customer[2]));
+		}
+
+		// third: remove the customers from the database to leave it in the original state
+		// at index, goto Remove case use and remove the previous client
+		HtmlAnchor removeCustomerLink = page.getAnchorByHref("RemoveCustomerPageController");
+		nextPage = (HtmlPage) removeCustomerLink.openLinkInNewWindow();
+		assertEquals("Enter VatNumber", nextPage.getTitleText());
+
+		for (String[] customer : CUSTOMERS) {
+			HtmlForm removeCustomerForm = nextPage.getForms().get(0);
+			HtmlInput vatInput = removeCustomerForm.getInputByName("vat");
+			vatInput.setValueAttribute(customer[0]);
+			HtmlInput submit = removeCustomerForm.getInputByName("submit");
+			HtmlPage reportPage = submit.click();
+			assertEquals("Enter VatNumber", reportPage.getTitleText());
+			assertFalse(reportPage.asText().contains(customer[0]));
+		}
+
+		// now check that the new clients were erased
+		nextPage = (HtmlPage) getCustomersLink.openLinkInNewWindow();
+		assertEquals("Customers Info", nextPage.getTitleText());
+
+		final HtmlTable tableAfterRemoving = nextPage.getHtmlElementById("clients");
+		System.out.println("\nTable after removing:");
+		System.out.println(tableAfterRemoving.asText());
+		for (String[] customer : CUSTOMERS) {
+			assertFalse(nextPage.asText().contains(customer[0]));
+		}
+
+	}
+
+	// a new sale will be listed as an open sale for the respective customer;
+	@Test
+	public void insertSaleTest() throws IOException {
+
+		// first: get all customers
+		HtmlAnchor getCustomersLink = page.getAnchorByHref("GetAllCustomersPageController");
+		HtmlPage nextPage = (HtmlPage) getCustomersLink.openLinkInNewWindow();
+		final HtmlTable table = nextPage.getHtmlElementById("clients");
+
+		// second: get the first customer's vat
+		final HtmlTableRow row = table.getRow(1); // first row is the header
+		final String VAT = row.getCell(2).asText();
+
+		System.out.println("VAT: " + VAT);
+
+		// third: at index, goto Insert new Sale case use and insert a new sale for that customer
+		HtmlAnchor addSaleLink = page.getAnchorByHref("addSale.html");
+		HtmlPage addSalePage = (HtmlPage) addSaleLink.openLinkInNewWindow();
+		assertEquals("New Sale", addSalePage.getTitleText());
+
+		// place data at form (only VAT is needed)
+		HtmlForm addSaleForm = addSalePage.getForms().get(0);
+		HtmlInput vatInput = addSaleForm.getInputByName("customerVat");
+		vatInput.setValueAttribute(VAT);
+
+		HtmlInput submit = addSaleForm.getInputByName("submit");
+		HtmlPage reportPage = submit.click();
+
+		// fourth: check if the sale is in the list of open sales for that customer
+		assertEquals("Sales Info", reportPage.getTitleText());
+		final HtmlTable salesTable = reportPage.getHtmlElementById("salesTable");
+
+		System.out.println("Sales table:");
+		System.out.println(salesTable.asText());
+
+		// get last row of the table (last sale)
+		final HtmlTableRow lastRow = salesTable.getRow(salesTable.getRowCount() - 1); // first row is the header
+		assertEquals("O", lastRow.getCell(3).asText()); // status is open
+		assertEquals(VAT, lastRow.getCell(4).asText()); // customer vat number is the same as the one used to insert the sale
 	}
 
 }
