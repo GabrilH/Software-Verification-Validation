@@ -1,0 +1,5 @@
+É suposto removermos os addresses no fim do teste? Se sim, como? (Teríamos que implementar muita coisa)
+    - Ou podemos no inicio do teste criar um novo customer e depois no fim basta apagá-lo?
+
+Cada narrativa é um @Test diferente, ou podemos juntar duas narrativas no mesmo @Test?
+    - p.ex. c) e d)

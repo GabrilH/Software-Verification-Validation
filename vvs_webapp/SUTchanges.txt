@@ -1,0 +1,4 @@
+added ' name="submit" ' to addAddressToCustomer.html submit button
+added ' name="submit" ' to addSale.html submit button
+added ' id="addresses" ' to CustomerInfo.jsp address table
+added ' id="salesTable" ' to SalesInfo.jsp sales table
