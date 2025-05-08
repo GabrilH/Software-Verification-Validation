@@ -1,3 +1,5 @@
+É para fazer os testes no TestIndex?
+
 É suposto removermos os addresses no fim do teste? Se sim, como? (Teríamos que implementar muita coisa)
     - Ou podemos no inicio do teste criar um novo customer e depois no fim basta apagá-lo?
 
