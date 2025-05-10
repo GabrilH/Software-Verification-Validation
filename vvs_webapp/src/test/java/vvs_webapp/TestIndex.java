@@ -261,7 +261,7 @@ public class TestIndex {
 			System.out.println("No addresses table found, assuming initial number of addresses is 0.");
 		}
 
-		// third: add address to customer with a POST request
+		// third: add address to customer
 		HtmlPage clientInfoPage = null;
 		for (String[] address : ADDRESSES)
 			clientInfoPage = addAddressToCustomer(VAT, address[0], address[1], address[2], address[3]);
@@ -329,36 +329,27 @@ public class TestIndex {
 		// first: get existing customer vat
 		final String VAT = getExistingCustomerVAT();
 
-		// third: at index, goto Insert new Sale case use and insert a new sale for that customer
-		HtmlAnchor addSaleLink = page.getAnchorByHref("addSale.html");
-		HtmlPage addSalePage = (HtmlPage) addSaleLink.openLinkInNewWindow();
-		assertEquals("New Sale", addSalePage.getTitleText());
-
-		// place data at form (only VAT is needed)
-		HtmlForm addSaleForm = addSalePage.getForms().get(0);
-		HtmlInput vatInput = addSaleForm.getInputByName("customerVat");
-		vatInput.setValueAttribute(VAT);
-
+		// second: add a new sale to the customer
 		HtmlPage salesInfoPage = addSale(VAT);
 		final HtmlTable cSalesTable = salesInfoPage.getHtmlElementById("salesTable");
 		final HtmlTableRow insertedSale = cSalesTable.getRow(cSalesTable.getRowCount() - 1); 
 
-		// fifth: close the sale
+		// third: close the sale
 		HtmlAnchor closeSaleLink = page.getAnchorByHref("UpdateSaleStatusPageControler");
 		HtmlPage closeSalePage = (HtmlPage) closeSaleLink.openLinkInNewWindow();
 		assertEquals("Enter Sale Id", closeSalePage.getTitleText());
 
-		// place data at form (only sale id is needed)
+		// place data at form
 		HtmlForm closeSaleForm = closeSalePage.getForms().get(0);
 		HtmlInput saleIdInput = closeSaleForm.getInputByName("id");
 		saleIdInput.setValueAttribute(insertedSale.getCell(0).asText()); // sale id is the first cell of the row
 		HtmlInput submit = closeSaleForm.getInputByName("submit");
-		HtmlPage reportPage = submit.click();
+		closeSalePage = submit.click();
 
-		// sixth: check if the sale is now closed (status is C) we're at the same page as before
-		assertEquals("Enter Sale Id", reportPage.getTitleText());
-		closeSaleForm = reportPage.getForms().get(0);
-		final HtmlTable salesTable = reportPage.getHtmlElementById("salesTable");
+		// fourth: check if the sale is now closed
+		assertEquals("Enter Sale Id", closeSalePage.getTitleText());
+		closeSaleForm = closeSalePage.getForms().get(0);
+		final HtmlTable salesTable = closeSalePage.getHtmlElementById("salesTable");
 		final HtmlTableRow closedSale = salesTable.getRow(salesTable.getRowCount() - 1);
 		assertEquals("C", closedSale.getCell(3).asText()); // status is closed
 		assertEquals(VAT, closedSale.getCell(4).asText()); // customer vat number is the same as the one used to insert the sale
@@ -388,8 +379,7 @@ public class TestIndex {
 		// third: create a new sale for that customer
 		addSale(VAT);
 
-		// fourth: go to the page Add Sale Delivery Page
-		// by sending GET request to AddSaleDeliveryPageController with VAT
+		// fourth: go to the page Add Sale Delivery Page by GET request
 		java.net.URL url = new java.net.URL(APPLICATION_URL + "AddSaleDeliveryPageController");
 		WebRequest getRequest = new WebRequest(url, HttpMethod.GET);
 		List<NameValuePair> requestParameters = new ArrayList<NameValuePair>();
@@ -398,17 +388,17 @@ public class TestIndex {
 		HtmlPage addSaleDeliveryPage = webClient.getPage(getRequest);
 		assertEquals("Enter Name", addSaleDeliveryPage.getTitleText());
 
-		// fifth: get first sale id from table id="salesTable" and first address id from table id="addressesTable"
+		// fifth: get most recent sale id and last address id
 		final HtmlTable salesTable = addSaleDeliveryPage.getHtmlElementById("salesTable");
-		final String saleId = salesTable.getRow(1).getCell(0).asText();
+		final String saleId = salesTable.getRow(salesTable.getRowCount() - 1).getCell(0).asText();
 		final HtmlTable addressesTable = addSaleDeliveryPage.getHtmlElementById("addressesTable");
-		final String addressId = addressesTable.getRow(1).getCell(0).asText();
+		final String addressId = addressesTable.getRow(addressesTable.getRowCount() - 1).getCell(0).asText();
 
 		System.out.println("\nInfo to delivery");
 		System.out.println("Sale id: " + saleId);
 		System.out.println("Address id: " + addressId);
 
-		// sixth: insert a new delivery for that sale and address
+		// sixth: insert a new delivery for that sale and address via POST request
 
 		// Set the request body with the necessary information
 		WebRequest postRequest = new WebRequest(url, HttpMethod.POST);

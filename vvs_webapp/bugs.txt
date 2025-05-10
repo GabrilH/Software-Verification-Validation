@@ -5,3 +5,7 @@
 - no AddSaleDelivery, é possível adicionar para um só SaleID vários AddressID (faz sentido?) ou até o mesmo, várias vezes
 
 - SaleDeliveries nao sao apagadas depois de remover o Customer (é suposto?)
+
+
+Requirements Issue:
+    - não é possivel apagar addresses
