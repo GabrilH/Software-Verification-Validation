@@ -226,6 +226,8 @@ public class TestIndex {
 	@Test
 	public void addTwoAddressesToCustomerTest() throws IOException {
 
+		System.out.println("\n\n----------------- addTwoAddressesToCustomerTest -----------------");
+
 		final String[][] ADDRESSES = {
 			// ADDRESS, DOOR, POSTAL_CODE, LOCALITY
 			{"Rua da Liberdade, 1", "1A", "1000-001", "Lisboa"},
@@ -279,6 +281,8 @@ public class TestIndex {
 	@Test
 	public void insertTwoCustomersTest() throws IOException {
 
+		System.out.println("\n\n----------------- insertTwoCustomersTest -----------------");
+
 		final String[][] CUSTOMERS = {
 			// {"VAT", "DESIGNATION", "PHONE"}
 			{"240985532", "FCUL", "217500000"},
@@ -326,6 +330,8 @@ public class TestIndex {
 	@Test
 	public void insertSaleCloseSaleTest() throws IOException {
 
+		System.out.println("\n\n----------------- insertSaleCloseSaleTest -----------------");
+
 		// first: get existing customer vat
 		final String VAT = getExistingCustomerVAT();
 
@@ -360,6 +366,8 @@ public class TestIndex {
 	// pages have the expected information.
 	@Test
 	public void insertDeliveryTest() throws IOException {
+
+		System.out.println("\n\n----------------- insertDeliveryTest -----------------");
 
 		final String VAT = "238720268";
 		final String DESIGNATION = "Jorge Ferreira";

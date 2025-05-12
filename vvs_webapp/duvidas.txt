@@ -1,7 +1,11 @@
 É para fazer os testes no TestIndex?
+    - R: é melhor fazer uma classe
 
-É suposto removermos os addresses no fim do teste? Se sim, como? (Teríamos que implementar muita coisa)
-    - Ou podemos no inicio do teste criar um novo customer e depois no fim basta apagá-lo?
+É suposto removermos os addresses no fim do teste? Se sim, como? 
+    - R: Implementar
 
 Cada narrativa é um @Test diferente, ou podemos juntar duas narrativas no mesmo @Test?
-    - p.ex. c) e d)
+    - R: separar as duas narrativas
+
+Mockito
+    - R: nao é preciso realmente implementar, basta mostrar no relatorio as mudanças que fariamos
