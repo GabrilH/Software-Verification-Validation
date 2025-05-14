@@ -60,7 +60,7 @@ public class SalesDBTest {
 		return false;
 	}
 
-		// after deleting a certain costumer, its sales should be removed from the database;
+	// after deleting a certain costumer, its sales should be removed from the database;
 	@Test
 	public void deleteCustomerSalesAreDeletedTest() throws ApplicationException {
 		System.out.println("deleteCustomerSalesAreDeletedTest()... ");
@@ -98,4 +98,42 @@ public class SalesDBTest {
 		salesDTO = SaleService.INSTANCE.getAllSales();
 		assertEquals(initialSize + 1, salesDTO.sales.size());
 	}
+
+    // a sale should start with status 'O' (open) when created
+    @Test
+    public void newSaleHasOpenStatusTest() throws ApplicationException {
+        System.out.println("newSaleHasOpenStatusTest()... ");
+        
+        // first: ensure customer exists
+        assumeTrue(hasClient(197672337));
+        
+        // second: create new sale
+        SaleService.INSTANCE.addSale(197672337);
+        
+        // third: get the customer's sales and check most recent one
+        SalesDTO salesDTO = SaleService.INSTANCE.getSaleByCustomerVat(197672337);
+        SaleDTO mostRecentSale = salesDTO.sales.get(salesDTO.sales.size() - 1);
+        
+        // fourth: verify the sale status is 'O'
+        assertEquals("O", mostRecentSale.statusId);
+    }
+
+    // a sale's total should start at 0.0 when created
+    @Test 
+    public void newSaleHasZeroTotalTest() throws ApplicationException {
+        System.out.println("newSaleHasZeroTotalTest()... ");
+        
+        // first: ensure customer exists
+        assumeTrue(hasClient(197672337));
+        
+        // second: create new sale
+        SaleService.INSTANCE.addSale(197672337);
+        
+        // third: get the customer's sales and check most recent one
+        SalesDTO salesDTO = SaleService.INSTANCE.getSaleByCustomerVat(197672337);
+        SaleDTO mostRecentSale = salesDTO.sales.get(salesDTO.sales.size() - 1);
+        
+        // fourth: verify the sale total is 0.0
+        assertEquals(0.0, mostRecentSale.total, 0.001);
+    }
 }
