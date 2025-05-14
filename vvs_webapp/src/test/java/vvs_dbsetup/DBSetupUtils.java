@@ -47,9 +47,11 @@ public class DBSetupUtils {
     public static final int NUM_INIT_CUSTOMERS;
     public static final int NUM_INIT_SALES;
     public static final int NUM_INIT_ADDRESSES;
+	public static final int NUM_INIT_DELIVERIES;
 
     public static final Operation INSERT_CUSTOMER_SALE_DATA;
     public static final Operation INSERT_CUSTOMER_ADDRESS_DATA;
+	public static final Operation INSERT_CUSTOMER_ADDRESS_SALE_DATA;
 	
 	static {
 		
@@ -67,6 +69,7 @@ public class DBSetupUtils {
             .columns("ID",                            "DATE", "TOTAL", "STATUS", "CUSTOMER_VAT")
             .values(   1,  new GregorianCalendar(2018,01,02),     0.0,      'O',      197672337)
             .values(   2,  new GregorianCalendar(2017,03,25),     0.0,      'O',      197672337)
+			.values(   3,  new GregorianCalendar(2017,05,27),     0.0,      'O',      168027852)
             .build();
 		
 		NUM_INIT_SALES = insertSales.getRowCount();
@@ -76,16 +79,27 @@ public class DBSetupUtils {
 		
 		Insert insertAddresses = 
 				insertInto("ADDRESS")
-                .withGeneratedValue("ID", ValueGenerators.sequence().startingAt(100L).incrementingBy(1))
-                .columns(                             "ADDRESS", "CUSTOMER_VAT")
-                .values(           "FCUL, Campo Grande, Lisboa",      197672337)
-                .values(          "R. 25 de Abril, 101A, Porto",      197672337)
-                .values( "Av Neil Armstrong, Cratera Azul, Lua",      168027852)
+                .columns("ID",	"ADDRESS", 									"CUSTOMER_VAT")
+                .values(1, 		"FCUL, Campo Grande, Lisboa",      				197672337)
+                .values(2,      "R. 25 de Abril, 101A, Porto",      			197672337)
+                .values(3, 		"Av Neil Armstrong, Cratera Azul, Lua",      	168027852)
                 .build();
 		
 		NUM_INIT_ADDRESSES = insertAddresses.getRowCount();		
 		
 		INSERT_CUSTOMER_ADDRESS_DATA = sequenceOf(insertCustomers, insertAddresses);
+
+		Insert insertDeliveries =
+				insertInto("SALEDELIVERY")
+				.withGeneratedValue("ID", ValueGenerators.sequence().startingAt(100L).incrementingBy(1))
+				.columns("SALE_ID",	"CUSTOMER_VAT", "ADDRESS_ID")
+				.values(1,			197672337,				 1)
+				.values(2,			197672337,				 2)
+				.build();
+
+		NUM_INIT_DELIVERIES = insertDeliveries.getRowCount();
+
+		INSERT_CUSTOMER_ADDRESS_SALE_DATA = sequenceOf(insertCustomers, insertAddresses, insertSales, insertDeliveries);
 	}
 	
 }
