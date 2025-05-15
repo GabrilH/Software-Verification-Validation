@@ -107,6 +107,9 @@ public class CustomersDBTest {
 				CustomerService.INSTANCE.addCustomer(c.vat, c.designation, c.phoneNumber);
 			});
 		}
+		
+		// third: check if customers number is the same
+		assertEquals(NUM_INIT_CUSTOMERS, CustomerService.INSTANCE.getAllCustomers().customers.size());	
 	}
 
 	// after the update of a costumer contact, that information should be properly saved;
