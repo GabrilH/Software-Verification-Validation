@@ -48,7 +48,7 @@ public class HtmlUnitTests {
 	@Test
 	public void addTwoAddressesToCustomerTest() throws IOException {
 
-		System.out.println("\n\n----------------- addTwoAddressesToCustomerTest -----------------");
+		System.out.println("\n----------------- addTwoAddressesToCustomerTest -----------------");
 
 		final String[][] ADDRESSES = {
 			// ADDRESS, DOOR, POSTAL_CODE, LOCALITY
@@ -68,15 +68,15 @@ public class HtmlUnitTests {
 		requestParameters.add(new NameValuePair("vat", VAT));
 		getRequest.setRequestParameters(requestParameters);
 		
-		HtmlPage reportPage = webClient.getPage(getRequest);
-		assertEquals(HttpMethod.GET, reportPage.getWebResponse().getWebRequest().getHttpMethod());
-		assertEquals("Customer Info", reportPage.getTitleText());
+		HtmlPage clientInfoPage = webClient.getPage(getRequest);
+		assertEquals(HttpMethod.GET, clientInfoPage.getWebResponse().getWebRequest().getHttpMethod());
+		assertEquals("Customer Info", clientInfoPage.getTitleText());
 
 		// get the table of addresses
 		HtmlTable initialTableAddresses = null;
 		int initialNumberOfAddresses = 0;
 		try {
-			initialTableAddresses = reportPage.getHtmlElementById("addressesTable");
+			initialTableAddresses = clientInfoPage.getHtmlElementById("addressesTable");
 			initialNumberOfAddresses = initialTableAddresses.getRowCount() - 1;
 			System.out.println("Initial table of addresses:");
 			System.out.println("Num of addresses: " + initialNumberOfAddresses);
@@ -86,7 +86,6 @@ public class HtmlUnitTests {
 		}
 
 		// third: add address to customer
-		HtmlPage clientInfoPage = null;
 		for (String[] address : ADDRESSES)
 			clientInfoPage = addAddressToCustomer(VAT, address[0], address[1], address[2], address[3]);
 
@@ -103,11 +102,11 @@ public class HtmlUnitTests {
 	@Test
 	public void insertTwoCustomersTest() throws IOException {
 
-		System.out.println("\n\n----------------- insertTwoCustomersTest -----------------");
+		System.out.println("\n----------------- insertTwoCustomersTest -----------------");
 
 		final String[][] CUSTOMERS = {
 			// {"VAT", "DESIGNATION", "PHONE"}
-			{"240985532", "FCUL", "217500000"},
+			{"503183504", "FCUL", "217500000"},
 			{"264862198", "IST", "217500001"}
 		};
 
@@ -118,10 +117,10 @@ public class HtmlUnitTests {
 
 		// second: check if the customers are in the list of all customers
 		HtmlAnchor getCustomersLink = page.getAnchorByHref("GetAllCustomersPageController");
-		HtmlPage nextPage = (HtmlPage) getCustomersLink.openLinkInNewWindow();
-		assertEquals("Customers Info", nextPage.getTitleText());
+		HtmlPage customersInfoPage = (HtmlPage) getCustomersLink.openLinkInNewWindow();
+		assertEquals("Customers Info", customersInfoPage.getTitleText());
 
-		final HtmlTable tableAfterAdd = nextPage.getHtmlElementById("clients");
+		final HtmlTable tableAfterAdd = customersInfoPage.getHtmlElementById("clients");
 		System.out.println("\nTable after adding:");
 		System.out.println(tableAfterAdd.asText());
 		for (String[] customer : CUSTOMERS) {
@@ -130,31 +129,19 @@ public class HtmlUnitTests {
 			assertTrue(tableAfterAdd.asText().contains(customer[2]));
 		}
 
-		// third: remove the customers from the database to leave it in the original state
+		// end: remove the customers from the database to leave it in the original state
 		for (String[] customer : CUSTOMERS)
 			removeCustomer(customer[0]);
-
-		// now check that the new clients were erased from List All Customers
-		nextPage = (HtmlPage) getCustomersLink.openLinkInNewWindow();
-		assertEquals("Customers Info", nextPage.getTitleText());
-
-		final HtmlTable tableAfterRemoving = nextPage.getHtmlElementById("clients");
-		System.out.println("\nTable after removing:");
-		System.out.println(tableAfterRemoving.asText());
-		for (String[] customer : CUSTOMERS) {
-			assertFalse(nextPage.asText().contains(customer[0]));
-		}
-
 	}
 
 	// a new sale will be listed as an open sale for the respective customer;
     @Test
     public void insertSaleTest() throws IOException {
 
-        System.out.println("\n\n----------------- insertSaleTest -----------------");
+        System.out.println("\n----------------- insertSaleTest -----------------");
 
-        // first: get existing customer vat
-        final String VAT = getExistingCustomerVAT();
+        // first: add temporary customer
+		final String VAT = addTempCustomer();
 
         // second: add a new sale to the customer
 		HtmlPage salesInfoPage = addSale(VAT);
@@ -164,6 +151,9 @@ public class HtmlUnitTests {
         // third: check if the sale is listed as open
         assertEquals("O", insertedSale.getCell(3).asText());
         assertEquals(VAT, insertedSale.getCell(4).asText());
+
+		// end: remove the customer from the database to leave it in the original state
+		removeCustomer(VAT);
     }
 
 
@@ -171,35 +161,22 @@ public class HtmlUnitTests {
 	@Test
 	public void closeSaleTest() throws IOException {
 
-		System.out.println("\n\n----------------- closeSaleTest -----------------");
+		System.out.println("\n----------------- closeSaleTest -----------------");
 
-		// first: get existing customer vat
-		final String VAT = getExistingCustomerVAT();
+		// first: add temporary customer
+		final String VAT = addTempCustomer();
 
 		// second: add a new sale to the customer
 		HtmlPage salesInfoPage = addSale(VAT);
 		final HtmlTable cSalesTable = salesInfoPage.getHtmlElementById("salesTable");
 		final HtmlTableRow insertedSale = cSalesTable.getRow(cSalesTable.getRowCount() - 1); 
+		String saleId = insertedSale.getCell(0).asText();
 
 		// third: close the sale
-		HtmlAnchor closeSaleLink = page.getAnchorByHref("UpdateSaleStatusPageControler");
-		HtmlPage closeSalePage = (HtmlPage) closeSaleLink.openLinkInNewWindow();
-		assertEquals("Enter Sale Id", closeSalePage.getTitleText());
+		closeSale(saleId);
 
-		// place data at form
-		HtmlForm closeSaleForm = closeSalePage.getForms().get(0);
-		HtmlInput saleIdInput = closeSaleForm.getInputByName("id");
-		saleIdInput.setValueAttribute(insertedSale.getCell(0).asText()); // sale id is the first cell of the row
-		HtmlInput submit = closeSaleForm.getInputByName("submit");
-		closeSalePage = submit.click();
-
-		// fourth: check if the sale is now closed
-		assertEquals("Enter Sale Id", closeSalePage.getTitleText());
-		closeSaleForm = closeSalePage.getForms().get(0);
-		final HtmlTable salesTable = closeSalePage.getHtmlElementById("salesTable");
-		final HtmlTableRow closedSale = salesTable.getRow(salesTable.getRowCount() - 1);
-		assertEquals("C", closedSale.getCell(3).asText()); // status is closed
-		assertEquals(VAT, closedSale.getCell(4).asText()); // customer vat number is the same as the one used to insert the sale
+		// end: remove the customer from the database to leave it in the original state
+		removeCustomer(VAT);
 	}
 	
 	// create a new customer, create a new sale for her, insert a delivery for
@@ -208,7 +185,7 @@ public class HtmlUnitTests {
 	@Test
 	public void insertDeliveryTest() throws IOException {
 
-		System.out.println("\n\n----------------- insertDeliveryTest -----------------");
+		System.out.println("\n----------------- insertDeliveryTest -----------------");
 
 		final String VAT = "238720268";
 		final String DESIGNATION = "Jorge Ferreira";
@@ -276,9 +253,21 @@ public class HtmlUnitTests {
 	/*
 	 * Helper methods to be used in the tests.
 	 */
+
+	// adds a temporary customer to the database and returns its VAT number;
+	private String addTempCustomer() throws IOException {
+		
+		final String VAT = "207169276";
+		final String DESIGNATION = "TEMP";
+		final String PHONE = "966666666";
+
+		addCustomer(VAT, DESIGNATION, PHONE);
+
+		return VAT;
+	}
 	
 	// adds a new customer to the database and checks if the information is properly
-	// listed in the List All Customers use case;
+	// listed in the Customer Info page;
 	private HtmlPage addCustomer(String vat, String designation, String phone) throws IOException {
 		// Build a POST request
 		java.net.URL url = new java.net.URL(APPLICATION_URL + "AddCustomerPageController");
@@ -332,6 +321,33 @@ public class HtmlUnitTests {
 		return salesInfoPage;
 	}
 
+	private HtmlPage closeSale(String saleId) throws IOException {
+		// Build a POST request
+		java.net.URL url = new java.net.URL(APPLICATION_URL + "UpdateSaleStatusPageControler");
+		WebRequest request = new WebRequest(url, HttpMethod.POST);
+
+		// Set the request body with the necessary information
+		String formData = String.format("id=%s", saleId);
+		request.setRequestBody(formData);
+
+		// Execute the request and get the response page
+		HtmlPage closeSalePage = webClient.getPage(request);
+		final HtmlTable salesTable = closeSalePage.getHtmlElementById("salesTable");
+		final HtmlTableRow closedSale = salesTable.getRow(salesTable.getRowCount() - 1);
+
+		// Prints
+		System.out.println("Closed sale with ID: " + saleId);
+
+		// Validate the response
+		assertEquals("Enter Sale Id", closeSalePage.getTitleText());
+		assertEquals("C", closedSale.getCell(3).asText());
+		assertEquals(saleId, closedSale.getCell(0).asText());
+
+		return closeSalePage;
+	}
+
+	// adds a new address to the database and checks if the information is properly
+	// listed in the Customer Info page;
 	private HtmlPage addAddressToCustomer(String vat, String address, String door, String postalCode, String locality) throws IOException {
 
 		// Build a POST request
@@ -362,6 +378,8 @@ public class HtmlUnitTests {
 		return clientInfoPage;
 	}
 
+	// removes a customer from the database and checks if the information is properly
+	// removed from the Remove Customer page;
 	private HtmlPage removeCustomer(String vat) throws IOException {
 		// Build a POST request
 		java.net.URL url = new java.net.URL(APPLICATION_URL + "RemoveCustomerPageController");
@@ -384,6 +402,7 @@ public class HtmlUnitTests {
 		return removeCustomerPage;
 	}
 
+	// gets the VAT of an existing customer from the List All Customers page;
 	private String getExistingCustomerVAT() throws IOException {
 		final int INDEX = 1;
 		// first: get all customers

@@ -57,19 +57,20 @@ public class DBSetupUtils {
 		
 		Insert insertCustomers =
 			insertInto("CUSTOMER")
-            .columns("ID", "DESIGNATION", "PHONENUMBER", "VATNUMBER")
-            .values(   1,   "JOSE FARIA",     914276732,   197672337)
-            .values(   2,  "LUIS SANTOS",     964294317,   168027852)
+			.withGeneratedValue("ID", ValueGenerators.sequence().startingAt(0L).incrementingBy(1))
+            .columns("DESIGNATION", "PHONENUMBER", "VATNUMBER")
+            .values("JOSE FARIA",     914276732,   197672337)
+            .values("LUIS SANTOS",     964294317,   168027852)
             .build();
 		
 		NUM_INIT_CUSTOMERS = insertCustomers.getRowCount();
 		
 		Insert insertSales = 
 			insertInto("SALE")
-            .columns("ID",                            "DATE", "TOTAL", "STATUS", "CUSTOMER_VAT")
-            .values(   1,  new GregorianCalendar(2018,01,02),     0.0,      'O',      197672337)
-            .values(   2,  new GregorianCalendar(2017,03,25),     0.0,      'O',      197672337)
-			.values(   3,  new GregorianCalendar(2017,05,27),     0.0,      'O',      168027852)
+            .columns("ID", "DATE", 							"TOTAL", "STATUS", "CUSTOMER_VAT")
+            .values(101,  new GregorianCalendar(2018,01,02),     0.0,     'O',      197672337)
+            .values(102,  new GregorianCalendar(2017,03,25),     0.0,     'O',      197672337)
+			.values(103,  new GregorianCalendar(2017,05,27),     0.0,     'O',      168027852)
             .build();
 		
 		NUM_INIT_SALES = insertSales.getRowCount();
@@ -79,10 +80,10 @@ public class DBSetupUtils {
 		
 		Insert insertAddresses = 
 				insertInto("ADDRESS")
-                .columns("ID",	"ADDRESS", 									"CUSTOMER_VAT")
-                .values(1, 		"FCUL, Campo Grande, Lisboa",      				197672337)
-                .values(2,      "R. 25 de Abril, 101A, Porto",      			197672337)
-                .values(3, 		"Av Neil Armstrong, Cratera Azul, Lua",      	168027852)
+                .columns("ID",	"ADDRESS", 							"CUSTOMER_VAT")
+                .values(1001, 	"FCUL;Campo Grande;Lisboa",      		197672337)
+                .values(1002,    "R. 25 de Abril;101A;Porto",      		197672337)
+                .values(1003, 	"Av Neil Armstrong;Cratera Azul;Lua",   168027852)
                 .build();
 		
 		NUM_INIT_ADDRESSES = insertAddresses.getRowCount();		
@@ -91,10 +92,10 @@ public class DBSetupUtils {
 
 		Insert insertDeliveries =
 				insertInto("SALEDELIVERY")
-				.withGeneratedValue("ID", ValueGenerators.sequence().startingAt(100L).incrementingBy(1))
+				.withGeneratedValue("ID", ValueGenerators.sequence().startingAt(0L).incrementingBy(1))
 				.columns("SALE_ID",	"CUSTOMER_VAT", "ADDRESS_ID")
-				.values(1,			197672337,				 1)
-				.values(2,			197672337,				 2)
+				.values(101,			197672337,			1001)
+				.values(102,			197672337,			1002)
 				.build();
 
 		NUM_INIT_DELIVERIES = insertDeliveries.getRowCount();
