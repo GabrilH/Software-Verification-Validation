@@ -1,7 +1,3 @@
-added ' name="submit" ' to addAddressToCustomer.html submit button
-added ' name="submit" ' to addSale.html submit button
-added ' name="submit" ' to CloseSale.jsp submit button
-
 added ' id="addressesTable" ' to CustomerInfo.jsp address table
 added ' id="addressesTable" ' to addSaleDelivery.jsp address table
 
