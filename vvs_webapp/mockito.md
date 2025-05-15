@@ -85,3 +85,19 @@ class SaleServiceTest {
 - **Inject mocks in tests** to isolate and test modules separately.
 
 See CustomerService.java and SaleService.java for the current code.
+
+
+---
+
+# CURSOR:
+
+To use this in your project, you would need to:
+Add Mockito to your pom.xml
+Create the interfaces
+Refactor the service implementations to use dependency injection
+Update any references to the old enum-based singletons throughout the codebase
+In conclusion, it is possible to mock business layer modules like services in this application, but the current implementation as enum singletons makes it difficult. The necessary refactoring steps involve:
+Creating interfaces for the services
+Refactoring the services to use dependency injection
+Using Mockito to create mock implementations of the interfaces for testing
+This approach allows module B (SaleService) to be tested independently of module A (CustomerService) by mocking A's behavior, which is the essence of unit testing with mock objects.
