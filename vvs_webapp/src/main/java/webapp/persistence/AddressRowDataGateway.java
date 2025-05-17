@@ -128,5 +128,29 @@ public class AddressRowDataGateway{
 			throw new RecordNotFoundException ("Address does not exist", e);
 		}
 	}
+
+	/**
+	 * The get address by id SQL statement
+	 * 
+	 */
+	private static final String GET_ADDRESS_BY_ID_SQL = 
+			"select * from address " +
+						"where id = ?";
+
+
+    public AddressRowDataGateway getAddressById(int addr_id) throws PersistenceException {
+        try (PreparedStatement statement = DataSource.INSTANCE.prepare(GET_ADDRESS_BY_ID_SQL)) {
+            statement.setInt(1, addr_id);
+            try (ResultSet rs = statement.executeQuery()) {
+                if (rs.next()) {
+                    return load(rs);
+                } else {
+                    throw new RecordNotFoundException("Address with id " + addr_id + " does not exist");
+                }
+            }
+        } catch (SQLException e) {
+            throw new PersistenceException("Error getting address by id", e);
+        }
+    }
 	
 }

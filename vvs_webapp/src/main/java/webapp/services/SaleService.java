@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import webapp.persistence.AddressRowDataGateway;
 import webapp.persistence.PersistenceException;
 import webapp.persistence.SaleDeliveryRowDataGateway;
 import webapp.persistence.SaleRowDataGateway;
@@ -90,12 +91,18 @@ public enum SaleService {
 	public int addSaleDelivery(int sale_id, int addr_id) throws ApplicationException {
 		try {
 			SaleRowDataGateway s = new SaleRowDataGateway().getSaleById(sale_id);
-			SaleDeliveryRowDataGateway sale = new SaleDeliveryRowDataGateway(sale_id, s.getCustomerVat() ,addr_id);
+			AddressRowDataGateway a = new AddressRowDataGateway().getAddressById(addr_id);
+			
+			if (s.getCustomerVat() != a.getCustVat()) {
+				throw new ApplicationException("Sale and address belong to different customers");
+			}
+			
+			SaleDeliveryRowDataGateway sale = new SaleDeliveryRowDataGateway(sale_id, s.getCustomerVat(), addr_id);
 			sale.insert();
 			return sale.getCustomerVat();
 			
 		} catch (PersistenceException e) {
-				throw new ApplicationException ("Can't add address to cutomer.", e);
+				throw new ApplicationException ("Can't add delivery sale to customer.", e);
 		}
 	}
 	
