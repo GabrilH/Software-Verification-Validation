@@ -34,9 +34,9 @@ public class SaleDeliveryRowDataGateway {
 				"from saledelivery " +
 				"where id = ?";
 	
-	
-	
-	
+
+
+				
 	// 1. constructor 
 
 	/**
@@ -146,5 +146,23 @@ public class SaleDeliveryRowDataGateway {
 			throw new RecordNotFoundException ("Employee does not exist", e);
 		}
 	}
+
+	/**
+	 * The update delivery's address id SQL statement
+	 */
 	
+	private static final String UPDATE_SALEDELIVERY_ADDRESS_ID_SQL =
+	 "update saledelivery " +
+		 "set address_id = ? " +
+		 "where id = ?";
+
+	public void updateAddressId(int addr_id) throws PersistenceException {
+		try (PreparedStatement statement = DataSource.INSTANCE.prepare(UPDATE_SALEDELIVERY_ADDRESS_ID_SQL)) {
+			statement.setInt(1, addr_id);
+			statement.setInt(2, id);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			throw new PersistenceException("Internal error updating delivery address id", e);
+		}
+	}
 }

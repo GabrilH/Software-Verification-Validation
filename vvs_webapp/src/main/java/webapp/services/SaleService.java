@@ -93,8 +93,18 @@ public enum SaleService {
 			SaleRowDataGateway s = new SaleRowDataGateway().getSaleById(sale_id);
 			AddressRowDataGateway a = new AddressRowDataGateway().getAddressById(addr_id);
 			
+			// Check if the sale and address belong to the same customer
 			if (s.getCustomerVat() != a.getCustVat()) {
 				throw new ApplicationException("Sale and address belong to different customers");
+			}
+			
+			// Check if sale_id already has a delivery, if so, update the address id
+			List<SaleDeliveryRowDataGateway> existingDeliveries = new SaleDeliveryRowDataGateway().getAllSaleDelivery(s.getCustomerVat());
+			for (SaleDeliveryRowDataGateway delivery : existingDeliveries) {
+				if (delivery.getSale_id() == sale_id) {
+					delivery.updateAddressId(addr_id);
+					return delivery.getCustomerVat();
+				}
 			}
 			
 			SaleDeliveryRowDataGateway sale = new SaleDeliveryRowDataGateway(sale_id, s.getCustomerVat(), addr_id);
