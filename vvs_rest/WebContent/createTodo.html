@@ -1,0 +1,34 @@
+<!-- access via http://localhost:8080/vvs_rest/createTodo.html -->
+
+<!DOCTYPE html>
+<html>
+ <head>
+  <title>Form to create a new resource</title>
+ </head>
+<body>
+
+    <form action="services/todos" method="POST">
+	    <label for="id">ID</label>
+	    <input name="id" />
+	    <br/>
+	    
+	    <label for="summary">Summary</label>
+	    <input name="summary" />
+	    <br/>
+	    
+	    Description:
+	    <TEXTAREA NAME="description" COLS=40 ROWS=6></TEXTAREA>
+	    <br/>
+	    <input type="submit" value="Submit" />   
+    </form>
+    
+    <hr>
+    
+    <a href="services/todos">check current todos</a><br>
+    <a href="services/todos/count">check total number of todos</a><br>
+    Check a specific id: <form action="services/todos/check" method="GET">
+	    <input name="id" /> <input type="submit" value="Submit" />   
+    </form>  
+</body>
+</html>
+
