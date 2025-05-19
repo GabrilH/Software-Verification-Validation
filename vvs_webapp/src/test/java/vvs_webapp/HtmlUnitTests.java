@@ -56,8 +56,8 @@ public class HtmlUnitTests {
 			{"Rua da Liberdade, 2", "2A", "1000-002", "Lisboa"}
 		};
 		
-		// first: get existing customer vat
-		final String VAT = getExistingCustomerVAT();
+		// first: create a temp customer
+		final String VAT = addTempCustomer();
 
 		// second: get initial number of addresses for that customer with a GET request
 		java.net.URL url = new java.net.URL(APPLICATION_URL+"GetCustomerPageController");
@@ -95,6 +95,9 @@ public class HtmlUnitTests {
 		final int finalNumberOfAddresses = finalTableAddresses.getRowCount() - 1;
 		System.out.println("\nFinal Num of addresses: " + finalNumberOfAddresses);
 		assertEquals(initialNumberOfAddresses + ADDRESSES.length, finalNumberOfAddresses);
+
+		// end: remove the customer from the database to leave it in the original state
+		removeCustomer(VAT);
 	}
 
 	// insert two new customers and check if all the information is properly
@@ -400,20 +403,5 @@ public class HtmlUnitTests {
 		assertFalse(removeCustomerPage.asText().contains(vat));
 
 		return removeCustomerPage;
-	}
-
-	// gets the VAT of an existing customer from the List All Customers page;
-	private String getExistingCustomerVAT() throws IOException {
-		final int INDEX = 1;
-		// first: get all customers
-		HtmlAnchor getCustomersLink = page.getAnchorByHref("GetAllCustomersPageController");
-		HtmlPage nextPage = (HtmlPage) getCustomersLink.openLinkInNewWindow();
-		final HtmlTable table = nextPage.getHtmlElementById("clients");
-
-		// second: get the i'th customer's vat
-		final HtmlTableRow row = table.getRow(INDEX); // first row is the header
-		String vat = row.getCell(2).asText();
-		System.out.println("Selected VAT: " + vat);
-		return vat;
 	}
 }

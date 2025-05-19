@@ -12,13 +12,10 @@ Mockito
 
 Nos testes de insert address e sale, podemos criar um novo cliente para depois no fim do teste basta removê-lo
 e assim os adddresses e sales vao tmb com os bois?
-    - R:
-
-É suposto falarmos no relatório sobre os testes que já existiam de exemplo? Ou podemos apagar os exemplos?
-    - R:
+    - R: acho que sim
 
 É para adicionar mais dados no DbSetup? Ou o que já existe é suficiente?
-    - R:
+    - R: só se precisarmos
 
 Nos testes da DB, é suposto testarmos com um VAT específico que esteja no Setup, ou ir buscar um aleatório, ou criar, ou até podemos testar com todos?
-    - R:
+    - R: blah blah blah
