@@ -60,7 +60,7 @@ public class SaleDeliveriesDBTest {
         
         SalesDeliveryDTO deliveries = SaleService.INSTANCE.getSalesDeliveryByVat(197672337);
 
-        assertEquals(NUM_INIT_DELIVERIES, deliveries.sales_delivery.size());
+        assertEquals(2, deliveries.sales_delivery.size());
     }
 
     @Test 
