@@ -33,7 +33,7 @@ Each test follows the same pattern:
 To leave the database in its original state, I created a temporary customer before each test, performed the actions to it and removed it in the end, which deletes on cascade its information (Sales, Addresses and Deliveries).
 
 ### 1. Adding Addresses to Existing Customer
-**Method:** `addTwoAddressesToCustomerTest()`
+**Method:** [addTwoAddressesToCustomerTest()](src\test\java\vvs_webapp\HtmlUnitTests.java#L45-L101)
 - Retrieves an existing customer's VAT number
 - Gets initial count of customer addresses
 - Adds two new addresses with predefined data
@@ -41,14 +41,14 @@ To leave the database in its original state, I created a temporary customer befo
 - Confirms the total row count increased by exactly two
 
 ### 2. Customer Insertion
-**Method:** `insertTwoCustomersTest()`
+**Method:** [insertTwoCustomersTest()](src\test\java\vvs_webapp\HtmlUnitTests.java#L103-L138)
 - Adds two new customers with VAT, designation, and phone details
 - Navigates to the "List All Customers" page
 - Verifies all customer information appears correctly in the list
 - Cleans up by removing the test customers
 
 ### 3. Sale Creation
-**Method:** `insertSaleTest()`
+**Method:** [insertSaleTest()](src\test\java\vvs_webapp\HtmlUnitTests.java#L140-L160)
 - Creates a temporary customer
 - Adds a new sale for this customer
 - Verifies the sale appears with status "O" (Open)
@@ -56,7 +56,7 @@ To leave the database in its original state, I created a temporary customer befo
 - Cleans up by removing the temporary customer
 
 ### 4. Sale Closure
-**Method:** `closeSaleTest()`
+**Method:** [closeSaleTest()](src\test\java\vvs_webapp\HtmlUnitTests.java#L163-L183)
 - Creates a temporary customer
 - Adds a new sale to the customer
 - Retrieves the sale ID
@@ -65,7 +65,7 @@ To leave the database in its original state, I created a temporary customer befo
 - Cleans up by removing the temporary customer
 
 ### 5. Delivery Creation
-**Method:** `insertDeliveryTest()`
+**Method:** [insertDeliveryTest()](src\test\java\vvs_webapp\HtmlUnitTests.java#L185-L254)
 - Creates a new customer with complete details
 - Adds an address to the customer
 - Creates a new sale for the customer
@@ -77,7 +77,7 @@ To leave the database in its original state, I created a temporary customer befo
 
 ## Database Testing
 
-Three test classes were implemented using DbSetup to test the database operations: `CustomersDBTest`, `SalesDBTest`, and `SaleDeliveriesDBTest`. The tests are supported by a utility class `DBSetupUtils` that handles database setup and provides common operations.
+Three test classes were implemented using DbSetup to test the database operations: [CustomersDBTest](src\test\java\vvs_dbsetup\CustomersDBTest.java), [SalesDBTest](src\test\java\vvs_dbsetup\SalesDBTest.java), and [SaleDeliveriesDBTest](src\test\java\vvs_dbsetup\SaleDeliveriesDBTest.java). The tests are supported by a utility class [DBSetupUtils](src\test\java\vvs_dbsetup\DBSetupUtils.java) that handles database setup and provides common operations.
 
 ### Database Setup
 
@@ -93,7 +93,7 @@ Each test class uses a similar setup strategy:
 
 ### Customer Tests
 
-**Method:** `addCustomerWithExistingVATTest()`
+**Method:** [addCustomerWithExistingVATTest()](src\test\java\vvs_dbsetup\CustomersDBTest.java#L96-L113)
 
 Tests that the SUT prevents adding a customer with an existing VAT number
 1. Retrieves all existing customers
@@ -101,21 +101,21 @@ Tests that the SUT prevents adding a customer with an existing VAT number
 3. Verifies that an `ApplicationException` is thrown for each attempt
 4. Verifies that the number of customers matches the initial count
 
-**Method:** `updateCustomerContactTest()`
+**Method:** [updateCustomerContactTest()](src/test/java/vvs_dbsetup/CustomersDBTest.java#L115-L136)
 
 Tests that customer contact information is properly updated
 1. Retrieves all existing customers
 2. Updates the phone number for all customers to a new value
 3. Verifies that all customers now have the new phone number
 
-**Method:** `deleteAllCustomersTest()`
+**Method:** [deleteAllCustomersTest()](src/test/java/vvs_dbsetup/CustomersDBTest.java#L138-L154)
 
 Tests that deleting all customers results in an empty customer list
 1. Retrieves all existing customers
 1. Deletes all customers one by one
 2. Verifies that the customer list is empty after deletion
 
-**Method:** `deleteCustomerTest()`
+**Method:** [deleteCustomerTest()](src/test/java/vvs_dbsetup/CustomersDBTest.java#L156-L182)
 
 Tests that a deleted customer can be added back without exceptions
 1. Saves the initial list of customers
@@ -126,7 +126,7 @@ Tests that a deleted customer can be added back without exceptions
 ---
 ### Sales Tests
 
-**Method:** `deleteCustomerSalesAreDeletedTest()`
+**Method:** [deleteCustomerSalesAreDeletedTest()](src/test/java/vvs_dbsetup/SalesDBTest.java#L63-L82)
 
 Tests that deleting a customer also removes its associated sales
 1. Verifies that a specific customer exists and has sales
@@ -134,21 +134,21 @@ Tests that deleting a customer also removes its associated sales
 3. Confirms the customer no longer exists
 4. Verifies that no sales remain for that customer's VAT number
 
-**Method:** `addSaleIncreasesSalesNumberTest()`
+**Method:** [addSaleIncreasesSalesNumberTest()](src/test/java/vvs_dbsetup/SalesDBTest.java#L84-L100)
 
 Tests that adding a sale increases the total count by one
 1. Gets the initial count of all sales
 2. Adds a new sale for an existing customer
 3. Verifies that the total count has increased by exactly one
 
-**Method:** `newSaleHasOpenStatusTest()`
+**Method:** [newSaleHasOpenStatusTest()](src/test/java/vvs_dbsetup/SalesDBTest.java#L102-L119)
 
 Tests that a newly created sale has the "Open" status ('O')
 1. Creates a new sale for an existing customer
 2. Retrieves the sales for that customer
 3. Verifies that the most recent sale has status 'O'
 
-**Method:** `newSaleHasZeroTotalTest()`
+**Method:** [newSaleHasZeroTotalTest()](src/test/java/vvs_dbsetup/SalesDBTest.java#L121-L139)
 
 Tests that a newly created sale has a total of 0.0
 1. Creates a new sale for an existing customer
@@ -158,12 +158,12 @@ Tests that a newly created sale has a total of 0.0
 ---
 ### Sale Deliveries Tests
 
-**Method:** `getSaleDeliveriesForCustomerTest()`
+**Method:** [getSaleDeliveriesForCustomerTest()](src/test/java/vvs_dbsetup/SaleDeliveriesDBTest.java#L55-L64)
 
 Tests retrieval of sale deliveries for a specific customer
 - Verifies that the expected number of deliveries (2) are returned
 
-**Method:** `addNewSaleDeliveryTest()`
+**Method:** [addNewSaleDeliveryTest()](src/test/java/vvs_dbsetup/SaleDeliveriesDBTest.java#L66-L88)
 
 Tests adding a new delivery for a sale
 1. Gets an existing sale and address for a customer
