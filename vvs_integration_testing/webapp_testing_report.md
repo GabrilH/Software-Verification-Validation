@@ -33,7 +33,7 @@ Each test follows the same pattern:
 To leave the database in its original state, I created a temporary customer before each test, performed the actions to it and removed it in the end, which deletes on cascade its information (Sales, Addresses and Deliveries).
 
 ### 1. Adding Addresses to Existing Customer
-**Method:** [addTwoAddressesToCustomerTest()](src\test\java\vvs_webapp\HtmlUnitTests.java#L45-L101)
+**Method:** [addTwoAddressesToCustomerTest()](src/test/java/vvs_webapp/HtmlUnitTests.java#L45-L101)
 - Retrieves an existing customer's VAT number
 - Gets initial count of customer addresses
 - Adds two new addresses with predefined data
@@ -41,14 +41,14 @@ To leave the database in its original state, I created a temporary customer befo
 - Confirms the total row count increased by exactly two
 
 ### 2. Customer Insertion
-**Method:** [insertTwoCustomersTest()](src\test\java\vvs_webapp\HtmlUnitTests.java#L103-L138)
+**Method:** [insertTwoCustomersTest()](src/test/java/vvs_webapp/HtmlUnitTests.java#L103-L138)
 - Adds two new customers with VAT, designation, and phone details
 - Navigates to the "List All Customers" page
 - Verifies all customer information appears correctly in the list
 - Cleans up by removing the test customers
 
 ### 3. Sale Creation
-**Method:** [insertSaleTest()](src\test\java\vvs_webapp\HtmlUnitTests.java#L140-L160)
+**Method:** [insertSaleTest()](src/test/java/vvs_webapp/HtmlUnitTests.java#L140-L160)
 - Creates a temporary customer
 - Adds a new sale for this customer
 - Verifies the sale appears with status "O" (Open)
@@ -56,7 +56,7 @@ To leave the database in its original state, I created a temporary customer befo
 - Cleans up by removing the temporary customer
 
 ### 4. Sale Closure
-**Method:** [closeSaleTest()](src\test\java\vvs_webapp\HtmlUnitTests.java#L163-L183)
+**Method:** [closeSaleTest()](src/test/java/vvs_webapp/HtmlUnitTests.java#L163-L183)
 - Creates a temporary customer
 - Adds a new sale to the customer
 - Retrieves the sale ID
@@ -65,7 +65,7 @@ To leave the database in its original state, I created a temporary customer befo
 - Cleans up by removing the temporary customer
 
 ### 5. Delivery Creation
-**Method:** [insertDeliveryTest()](src\test\java\vvs_webapp\HtmlUnitTests.java#L185-L254)
+**Method:** [insertDeliveryTest()](src/test/java/vvs_webapp/HtmlUnitTests.java#L185-L254)
 - Creates a new customer with complete details
 - Adds an address to the customer
 - Creates a new sale for the customer
@@ -77,7 +77,7 @@ To leave the database in its original state, I created a temporary customer befo
 
 ## Database Testing
 
-Three test classes were implemented using DbSetup to test the database operations: [CustomersDBTest](src\test\java\vvs_dbsetup\CustomersDBTest.java), [SalesDBTest](src\test\java\vvs_dbsetup\SalesDBTest.java), and [SaleDeliveriesDBTest](src\test\java\vvs_dbsetup\SaleDeliveriesDBTest.java). The tests are supported by a utility class [DBSetupUtils](src\test\java\vvs_dbsetup\DBSetupUtils.java) that handles database setup and provides common operations.
+Three test classes were implemented using DbSetup to test the database operations: [CustomersDBTest](src/test/java/vvs_dbsetup/CustomersDBTest.java), [SalesDBTest](src/test/java/vvs_dbsetup/SalesDBTest.java), and [SaleDeliveriesDBTest](src/test/java/vvs_dbsetup/SaleDeliveriesDBTest.java). The tests are supported by a utility class [DBSetupUtils](src/test/java/vvs_dbsetup/DBSetupUtils.java) that handles database setup and provides common operations.
 
 ### Database Setup
 
@@ -93,7 +93,7 @@ Each test class uses a similar setup strategy:
 
 ### Customer Tests
 
-**Method:** [addCustomerWithExistingVATTest()](src\test\java\vvs_dbsetup\CustomersDBTest.java#L96-L113)
+**Method:** [addCustomerWithExistingVATTest()](src/test/java/vvs_dbsetup/CustomersDBTest.java#L96-L113)
 
 Tests that the SUT prevents adding a customer with an existing VAT number
 1. Retrieves all existing customers
